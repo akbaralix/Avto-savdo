@@ -7,6 +7,14 @@
   padding: 0;
   box-sizing: border-box;
 }
+@font-face {
+  font-family: "MyTrebuchet";
+  src:
+    url("./fonts/TrebuchetMS.woff2") format("woff2"),
+    url("./fonts/TrebuchetMS.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
 
 body {
   font-family:
