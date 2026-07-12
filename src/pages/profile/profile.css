@@ -1,0 +1,546 @@
+.profile-container {
+  padding-top: 100px;
+  min-height: calc(100vh - 100px);
+  background-color: #f8fafc;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  box-sizing: border-box;
+}
+
+/* 1. Logged Out State Styles */
+.profile-container.logged-out {
+  align-items: center;
+  padding: 120px 20px 40px;
+}
+
+.login-card {
+  background: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(0, 0, 0, 0.03);
+  padding: 40px;
+  max-width: 450px;
+  width: 100%;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.login-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
+}
+
+.login-icon-wrapper {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 24px;
+}
+
+.login-icon {
+  font-size: 32px;
+  color: #4f46e5;
+}
+
+.login-header h2 {
+  font-size: 26px;
+  font-weight: 800;
+  color: #1e293b;
+  margin-bottom: 12px;
+}
+
+.login-header p {
+  font-size: 15px;
+  color: #64748b;
+  line-height: 1.5;
+  margin-bottom: 30px;
+}
+
+.auth-error-box {
+  background-color: #fef2f2;
+  border: 1px solid #fca5a5;
+  color: #b91c1c;
+  padding: 12px 16px;
+  border-radius: 10px;
+  font-size: 14px;
+  margin-bottom: 20px;
+  font-weight: 500;
+  text-align: left;
+}
+
+.login-action-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 30px;
+  min-height: 50px;
+}
+
+/* Telegram login custom styled mock button */
+.telegram-mock-login {
+  width: 100%;
+}
+
+.tg-mock-btn {
+  background: linear-gradient(135deg, #0088cc 0%, #0077b5 100%);
+  color: #ffffff;
+  border: none;
+  padding: 14px 24px;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  width: 100%;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 15px rgba(0, 136, 204, 0.2);
+}
+
+.tg-mock-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(0, 136, 204, 0.3);
+}
+
+.tg-mock-warning {
+  font-size: 12px;
+  color: #94a3b8;
+  margin-top: 10px;
+  line-height: 1.4;
+}
+
+.tg-mock-warning code {
+  background: #f1f5f9;
+  padding: 2px 4px;
+  border-radius: 4px;
+  color: #0f172a;
+}
+
+.auth-spinner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  color: #4f46e5;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.spinner-icon {
+  font-size: 24px;
+}
+
+.spinning {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.login-footer p {
+  font-size: 12px;
+  color: #94a3b8;
+  border-top: 1px solid #f1f5f9;
+  padding-top: 20px;
+}
+
+/* 2. Logged In State Styles */
+.profile-container.logged-in {
+  padding: 120px 24px 60px;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.profile-layout {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 30px;
+  width: 100%;
+}
+
+/* Sidebar Styles */
+.profile-sidebar {
+  width: 100%;
+}
+
+.user-details-card {
+  background: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(0, 0, 0, 0.03);
+  padding: 30px;
+  text-align: center;
+  position: sticky;
+  top: 100px;
+}
+
+.avatar-wrapper {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  margin: 0 auto 20px;
+  padding: 4px;
+  border: 2px solid #e2e8f0;
+  background: #ffffff;
+}
+
+.user-avatar {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.avatar-placeholder {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: #f1f5f9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40px;
+  color: #94a3b8;
+}
+
+.user-fullname {
+  font-size: 22px;
+  font-weight: 800;
+  color: #0f172a;
+  margin-bottom: 6px;
+}
+
+.user-username {
+  font-size: 14px;
+  color: #64748b;
+  font-weight: 500;
+  margin-bottom: 20px;
+}
+
+.user-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  background-color: #f8fafc;
+  border-radius: 10px;
+  font-size: 13px;
+  margin-bottom: 24px;
+  border: 1px solid #edf2f7;
+}
+
+.meta-label {
+  color: #64748b;
+  font-weight: 500;
+}
+
+.meta-value {
+  color: #0f172a;
+  font-weight: 700;
+}
+
+.logout-btn {
+  width: 100%;
+  background-color: #fef2f2;
+  color: #dc2626;
+  border: 1px solid #fee2e2;
+  padding: 12px;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.2s ease;
+}
+
+.logout-btn:hover {
+  background-color: #fee2e2;
+  color: #b91c1c;
+}
+
+/* Main Content Styles */
+.profile-main {
+  background: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(0, 0, 0, 0.03);
+  padding: 30px;
+  min-height: 500px;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #f1f5f9;
+  padding-bottom: 20px;
+  margin-bottom: 24px;
+}
+
+.title-area h2 {
+  font-size: 22px;
+  font-weight: 800;
+  color: #0f172a;
+  margin-bottom: 4px;
+}
+
+.ads-count {
+  font-size: 13px;
+  color: #64748b;
+  font-weight: 600;
+  background-color: #f1f5f9;
+  padding: 3px 8px;
+  border-radius: 6px;
+}
+
+.add-new-ad-btn {
+  background-color: #000000;
+  color: #ffffff;
+  padding: 12px 20px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.add-new-ad-btn:hover {
+  background-color: #2e31d3;
+  transform: translateY(-1px);
+}
+
+.profile-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 0;
+  color: #64748b;
+  gap: 12px;
+}
+
+/* My Cars List (Row Layout) */
+.my-cars-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.my-car-row {
+  display: flex;
+  align-items: center;
+  padding: 16px;
+  border: 1px solid #edf2f7;
+  border-radius: 15px;
+  transition: all 0.2s ease;
+}
+
+.my-car-row:hover {
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+  border-color: #cbd5e1;
+}
+
+.my-car-img-wrapper {
+  width: 90px;
+  height: 90px;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-right: 20px;
+  flex-shrink: 0;
+}
+
+.my-car-img-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.my-car-info {
+  flex-grow: 1;
+}
+
+.my-car-info h3 {
+  font-size: 17px;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 6px;
+}
+
+.my-car-details {
+  display: flex;
+  gap: 15px;
+  font-size: 13px;
+  color: #64748b;
+  margin-bottom: 6px;
+  align-items: center;
+}
+
+.my-car-details span {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.my-car-price {
+  font-size: 16px;
+  font-weight: 800;
+  color: #2e31d3;
+}
+
+.my-car-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-left: 20px;
+}
+
+.action-view-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background-color: #f1f5f9;
+  color: #334155;
+  text-decoration: none;
+  padding: 10px 16px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  border: 1px solid #e2e8f0;
+}
+
+.action-view-btn:hover {
+  background-color: #e2e8f0;
+  color: #0f172a;
+}
+
+.action-delete-btn {
+  background-color: #fff5f5;
+  color: #e53e3e;
+  border: 1px solid #fed7d7;
+  padding: 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.action-delete-btn:hover {
+  background-color: #fed7d7;
+  color: #c53030;
+}
+
+/* No Ads Empty State */
+.no-ads-card {
+  text-align: center;
+  padding: 60px 20px;
+  background-color: #f8fafc;
+  border-radius: 15px;
+  border: 1px dashed #cbd5e1;
+}
+
+.no-ads-icon-wrapper {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: #e2e8f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 16px;
+}
+
+.no-ads-icon {
+  font-size: 26px;
+  color: #64748b;
+}
+
+.no-ads-card h3 {
+  font-size: 18px;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 8px;
+}
+
+.no-ads-card p {
+  font-size: 14px;
+  color: #64748b;
+  margin-bottom: 24px;
+  max-width: 320px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.create-first-ad-btn {
+  display: inline-block;
+  background-color: #000000;
+  color: #ffffff;
+  text-decoration: none;
+  padding: 12px 24px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 700;
+  transition: all 0.2s ease;
+}
+
+.create-first-ad-btn:hover {
+  background-color: #2e31d3;
+}
+
+/* Responsive Styles */
+@media (max-width: 900px) {
+  .profile-layout {
+    grid-template-columns: 1fr;
+  }
+  
+  .user-details-card {
+    position: static;
+  }
+}
+
+@media (max-width: 600px) {
+  .profile-container.logged-in {
+    padding: 100px 12px 100px; /* Leave space for bottom nav */
+  }
+
+  .my-car-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    position: relative;
+    padding-bottom: 60px;
+  }
+
+  .my-car-img-wrapper {
+    width: 100%;
+    height: 160px;
+    margin-right: 0;
+  }
+
+  .my-car-actions {
+    position: absolute;
+    bottom: 12px;
+    right: 12px;
+    left: 12px;
+    margin-left: 0;
+    justify-content: flex-end;
+  }
+
+  .action-view-btn {
+    flex-grow: 1;
+    justify-content: center;
+  }
+}
