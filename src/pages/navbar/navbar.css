@@ -1,0 +1,91 @@
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: rgb(255, 255, 255);
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+}
+
+.header-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 1200px;
+  padding: 20px;
+}
+.logo a {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  user-select: none;
+}
+
+.logo img {
+  width: 30px;
+  border-radius: 50px;
+}
+.logo h3 {
+  font-size: 20px;
+}
+.navbar nav ul {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.navbar nav ul li a {
+  position: relative;
+  text-decoration: none;
+}
+
+.navbar nav ul li a::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -8px;
+  transform: translateX(-50%);
+  width: 0;
+  height: 2px;
+  background: black;
+  transition: width 0.3s ease;
+}
+
+.navbar nav ul li a.active::before {
+  width: 70%;
+}
+.home-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.home-header-actions a {
+  background-color: rgba(255, 255, 255, 0.682);
+  display: flex;
+  text-align: center;
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid rgba(53, 52, 52, 0.2);
+}
+.home-header-actions-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.home-header-actions button {
+  padding: 10px 20px;
+  border-radius: 10px;
+  font-size: 15px;
+  background-color: black;
+  color: white;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.home-header-actions button svg {
+  font-size: 14px;
+  margin-top: 3px;
+}
