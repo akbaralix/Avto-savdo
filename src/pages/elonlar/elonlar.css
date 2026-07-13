@@ -7,6 +7,7 @@
 .elonlar-header {
   border-bottom: 1px solid #e2e8f0;
   padding-bottom: 20px;
+  text-align: center;
 }
 
 .elonlar-header h1 {
@@ -48,7 +49,54 @@
   border-bottom: 1px solid #edf2f7;
   padding-bottom: 12px;
 }
+/* Tugmalarni yonma-yon joylashtirish */
+.sidebar-header-btns {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
 
+/* Yangi yopib-ochuvchi tugma stili */
+.toggle-filters-btn {
+  background: #f0f2f5;
+  border: none;
+  border-radius: 6px;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #495057;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+.toggle-filters-btn:hover {
+  background: #e2e6ea;
+  color: #212529;
+}
+
+/* Animatsiya konteyneri: yopiq holatda */
+.filters-collapsible {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 0.3s ease,
+    visibility 0.3s ease;
+}
+
+/* Aktiv (Ochiq) holatda */
+.filters-collapsible.is-open {
+  max-height: 1000px; /* Ichidagi hamma element sig'ishi uchun yetarli qiymat */
+  opacity: 1;
+  visibility: visible;
+  padding-top: 15px; /* Elementlar yopishib qolmasligi uchun */
+}
 .sidebar-header h3 {
   font-size: 18px;
   font-weight: 800;

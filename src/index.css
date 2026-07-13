@@ -1,3 +1,5 @@
+@import url(https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;800;900&display=swap);
+
 :root {
   --text-color: #141414;
   --btn-color: #072ad8;
@@ -46,4 +48,9 @@ button {
 }
 li {
   list-style: none;
+}
+@media (max-width: 750px) {
+  body {
+    font-family: "Poppins", sans-serif;
+  }
 }

@@ -1,7 +1,7 @@
 .promo-banner {
   display: flex;
   height: 350px;
-  background-color: rgb(239, 239, 240);
+  background-color: rgb(133, 133, 241);
   border-radius: 20px;
   margin-top: 20px;
 }
@@ -208,7 +208,6 @@
   color: white;
   padding: 14px 30px;
   font-size: 16px;
-  font-weight: 700;
   border-radius: 12px;
   display: flex;
   align-items: center;
@@ -216,11 +215,6 @@
   gap: 8px;
   transition: all 0.2s ease;
   height: 48px;
-}
-
-.search-btn:hover {
-  background-color: #1a1d9b;
-  transform: translateY(-2px);
 }
 
 @media (max-width: 900px) {
@@ -251,6 +245,8 @@
 
 .section-header {
   text-align: center;
+  display: flex;
+  flex-direction: column;
 }
 
 .section-header h2 {
@@ -284,13 +280,6 @@
   flex-direction: column;
   align-items: center;
   gap: 12px;
-}
-
-.category-card:hover {
-  background-color: #ffffff;
-  border-color: #2e31d3;
-  box-shadow: 0 10px 20px rgba(46, 49, 211, 0.05);
-  transform: translateY(-5px);
 }
 
 .category-icon-wrapper {
@@ -499,7 +488,6 @@
   color: #1a202c;
   border: 1px solid #e2e8f0;
   font-size: 13px;
-  font-weight: 700;
   padding: 8px 14px;
   border-radius: 8px;
   transition: all 0.2s ease;
@@ -536,21 +524,14 @@
 
 .view-all-btn {
   display: inline-block;
-  background-color: #000;
+  background-color: #2e31d3;
   color: #fff;
-  font-weight: 700;
   font-size: 15px;
   padding: 14px 28px;
   border-radius: 12px;
   transition: all 0.2s ease;
 }
 
-.view-all-btn:hover {
-  background-color: #2e31d3;
-  transform: translateY(-2px);
-}
-
-/* Advantages styling */
 .advantages-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);

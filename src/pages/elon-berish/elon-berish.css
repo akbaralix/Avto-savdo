@@ -22,14 +22,17 @@
 }
 
 .elon-berish-form {
-  background-color: #ffffff;
-  border: 1px solid #e2e8f0;
-  border-radius: 24px;
-  padding: 40px;
   display: flex;
   flex-direction: column;
   gap: 30px;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02);
+}
+
+.elon-block {
+  border-radius: 24px;
+  padding: 40px;
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
 }
 
 .form-section-title {
@@ -62,7 +65,8 @@
 .form-group {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 10px;
+  margin-top: 10px;
 }
 
 .form-group label {
@@ -90,13 +94,26 @@
 .form-group textarea:focus {
   border-color: #2e31d3;
 }
-
+.form-group textarea {
+  resize: none;
+  font-family:
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    Oxygen,
+    Ubuntu,
+    Cantarell,
+    "Open Sans",
+    "Helvetica Neue",
+    sans-serif;
+}
 .submit-ad-btn {
   background-color: #2e31d3;
   color: #ffffff;
   padding: 16px;
   font-size: 16px;
-  font-weight: 700;
   border-radius: 12px;
   display: flex;
   align-items: center;
@@ -104,11 +121,6 @@
   gap: 10px;
   transition: all 0.2s ease;
   margin-top: 20px;
-}
-
-.submit-ad-btn:hover {
-  background-color: #1a1d9b;
-  transform: translateY(-2px);
 }
 
 @media (max-width: 900px) {
@@ -121,7 +133,7 @@
   .form-grid {
     grid-template-columns: 1fr;
   }
-  .elon-berish-form {
+  .elon-block {
     padding: 24px;
   }
 }
@@ -210,7 +222,9 @@
 }
 
 @keyframes spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .uploaded-previews-container {
@@ -239,7 +253,7 @@
   overflow: hidden;
   border: 1px solid #e2e8f0;
   background-color: #edf2f7;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
 }
 
 .preview-card img {
@@ -258,7 +272,7 @@
   font-weight: 700;
   padding: 2px 6px;
   border-radius: 4px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
 }
 
 .preview-card .delete-preview-btn {
@@ -277,13 +291,7 @@
   cursor: pointer;
   font-size: 11px;
   transition: all 0.2s ease;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
-
-.preview-card .delete-preview-btn:hover {
-  background-color: #e53e3e;
-  color: #ffffff;
-  transform: scale(1.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 /* Modals styling */
@@ -374,7 +382,6 @@
   width: 100%;
   padding: 12px;
   font-size: 14px;
-  font-weight: 700;
   border-radius: 10px;
   cursor: pointer;
   transition: all 0.2s ease;
@@ -398,7 +405,6 @@
   border: none;
   padding: 14px;
   font-size: 15px;
-  font-weight: 700;
   border-radius: 12px;
   cursor: pointer;
   transition: all 0.2s ease;
