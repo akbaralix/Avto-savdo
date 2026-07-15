@@ -8,7 +8,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-
+  scrollbar-width: thin;
   -webkit-tap-highlight-color: transparent;
 }
 @font-face {
@@ -51,6 +51,8 @@ li {
 }
 @media (max-width: 750px) {
   body {
-    font-family: "Poppins", sans-serif;
+    font-family:
+      "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+    letter-spacing: 0.4px;
   }
 }

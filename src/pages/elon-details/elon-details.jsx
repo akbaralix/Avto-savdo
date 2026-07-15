@@ -1,10 +1,22 @@
 import React, { useEffect, useState, useContext } from "react";
 import { useParams, Link } from "react-router-dom";
 import { AppContext } from "../../context/AppContext";
-import { 
-  FaMapMarkerAlt, FaPhoneAlt, FaCalendarAlt, FaRoad, 
-  FaCogs, FaGasPump, FaPalette, FaHeart, FaRegHeart,
-  FaChevronLeft, FaChevronRight, FaSearchPlus, FaSearchMinus, FaTimes, FaUser
+import {
+  FaMapMarkerAlt,
+  FaPhoneAlt,
+  FaCalendarAlt,
+  FaRoad,
+  FaCogs,
+  FaGasPump,
+  FaPalette,
+  FaHeart,
+  FaRegHeart,
+  FaChevronLeft,
+  FaChevronRight,
+  FaSearchPlus,
+  FaSearchMinus,
+  FaTimes,
+  FaUser,
 } from "react-icons/fa";
 import "./elon-details.css";
 
@@ -19,7 +31,7 @@ function ElonDetails() {
 
   // Gallery slider state
   const [currentImgIndex, setCurrentImgIndex] = useState(0);
-  
+
   // Lightbox modal state
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
   const [zoomScale, setZoomScale] = useState(1);
@@ -30,7 +42,9 @@ function ElonDetails() {
         setLoading(true);
         const res = await fetch(`${API_URL}/api/products/${id}`);
         if (!res.ok) {
-          throw new Error("Avtomobil ma'lumotlarini yuklashda xatolik yuz berdi yoki e'lon o'chirilgan.");
+          throw new Error(
+            "Avtomobil ma'lumotlarini yuklashda xatolik yuz berdi yoki e'lon o'chirilgan.",
+          );
         }
         const data = await res.json();
         setCar(data);
@@ -66,9 +80,13 @@ function ElonDetails() {
   }
 
   // Handle images normalisation (support legacy single image or array)
-  const images = car.images && car.images.length > 0 
-    ? car.images 
-    : [car.image || "https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=800&q=80"];
+  const images =
+    car.images && car.images.length > 0
+      ? car.images
+      : [
+          car.image ||
+            "https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=800&q=80",
+        ];
 
   const isFavorite = favorites.includes(car._id);
 
@@ -109,23 +127,23 @@ function ElonDetails() {
   return (
     <div className="details-page-wrapper">
       <div className="details-container">
-        
         {/* Navigation Breadcrumb */}
         <div className="details-breadcrumb">
           <Link to="/">Bosh sahifa</Link> <span>/</span>
           <Link to="/elonlar">E'lonlar</Link> <span>/</span>
-          <span className="current-crumb">{car.brand} {car.model}</span>
+          <span className="current-crumb">
+            {car.brand} {car.model}
+          </span>
         </div>
 
         <div className="details-grid">
-          
           {/* Left Column: Media Gallery */}
           <div className="details-media-column">
             <div className="main-carousel">
               <div className="main-image-wrapper" onClick={handleImageClick}>
-                <img 
-                  src={images[currentImgIndex]} 
-                  alt={`${car.brand} ${car.model} - ${currentImgIndex + 1}`} 
+                <img
+                  src={images[currentImgIndex]}
+                  alt={`${car.brand} ${car.model} - ${currentImgIndex + 1}`}
                   className="carousel-main-image"
                 />
                 <div className="image-zoom-overlay">
@@ -135,10 +153,16 @@ function ElonDetails() {
 
               {images.length > 1 && (
                 <>
-                  <button className="carousel-nav-btn prev" onClick={handlePrevImg}>
+                  <button
+                    className="carousel-nav-btn prev"
+                    onClick={handlePrevImg}
+                  >
                     <FaChevronLeft />
                   </button>
-                  <button className="carousel-nav-btn next" onClick={handleNextImg}>
+                  <button
+                    className="carousel-nav-btn next"
+                    onClick={handleNextImg}
+                  >
                     <FaChevronRight />
                   </button>
                 </>
@@ -149,8 +173,8 @@ function ElonDetails() {
             {images.length > 1 && (
               <div className="thumbnails-grid">
                 {images.map((img, index) => (
-                  <div 
-                    key={index} 
+                  <div
+                    key={index}
                     className={`thumbnail-item ${index === currentImgIndex ? "active" : ""}`}
                     onClick={() => setCurrentImgIndex(index)}
                   >
@@ -166,18 +190,24 @@ function ElonDetails() {
             <div className="info-header-card">
               <div className="tag-row">
                 <span className="category-badge">{car.category}</span>
-                <button 
+                <button
                   className={`fav-button ${isFavorite ? "active" : ""}`}
                   onClick={() => toggleFavorite(car._id)}
-                  title={isFavorite ? "Sevimlilardan o'chirish" : "Sevimlilarga qo'shish"}
+                  title={
+                    isFavorite
+                      ? "Sevimlilardan o'chirish"
+                      : "Sevimlilarga qo'shish"
+                  }
                 >
                   {isFavorite ? <FaHeart /> : <FaRegHeart />}
                 </button>
               </div>
 
-              <h1 className="car-fullname-title">{car.brand} {car.model}</h1>
+              <h1 className="car-fullname-title">
+                {car.brand} {car.model}
+              </h1>
               <div className="price-display">${car.price.toLocaleString()}</div>
-              
+
               <div className="location-row">
                 <FaMapMarkerAlt /> <span>{car.city} shahri</span>
               </div>
@@ -199,7 +229,9 @@ function ElonDetails() {
                   <FaRoad className="spec-detail-icon" />
                   <div className="spec-text">
                     <span className="label">Yurgani</span>
-                    <span className="value">{car.mileage.toLocaleString()} km</span>
+                    <span className="value">
+                      {car.mileage.toLocaleString()} km
+                    </span>
                   </div>
                 </div>
 
@@ -241,7 +273,8 @@ function ElonDetails() {
             <div className="description-card">
               <h3>Qo'shimcha ma'lumot (Tavsif)</h3>
               <p className="description-text">
-                {car.description || "Avtomobil haqida qo'shimcha ma'lumotlar kiritilmagan."}
+                {car.description ||
+                  "Avtomobil haqida qo'shimcha ma'lumotlar kiritilmagan."}
               </p>
             </div>
 
@@ -258,16 +291,18 @@ function ElonDetails() {
                 <div className="owner-meta-text">
                   <span className="role-tag">Sotuvchi</span>
                   <h4>
-                    {car.user 
-                      ? `${car.user.first_name} ${car.user.last_name || ""}` 
+                    {car.user
+                      ? `${car.user.first_name} ${car.user.last_name || ""}`
                       : "Jismoniy shaxs"}
                   </h4>
                   {car.user && car.user.username && (
-                    <span className="tg-username">@{car.user.username}</span>
+                    <Link to={`https://t.me/${car.user.username}`}>
+                      <span className="tg-username">@{car.user.username}</span>
+                    </Link>
                   )}
                 </div>
               </div>
-              
+
               <div className="phone-action-area">
                 <p>Telefon raqami orqali bog'lanish:</p>
                 <a href={`tel:${car.ownerPhone}`} className="owner-phone-link">
@@ -275,31 +310,42 @@ function ElonDetails() {
                 </a>
               </div>
             </div>
-
           </div>
-
         </div>
-
       </div>
 
       {/* Lightbox / Zoom & Navigation Modal */}
       {isLightboxOpen && (
         <div className="lightbox-modal">
           <div className="lightbox-overlay" onClick={handleCloseLightbox} />
-          
+
           {/* Lightbox Controls Header */}
           <div className="lightbox-controls">
             <span className="lightbox-indicator">
               {currentImgIndex + 1} / {images.length}
             </span>
             <div className="lightbox-zoom-buttons">
-              <button onClick={zoomIn} title="Yaqinlashtirish"><FaSearchPlus /></button>
-              <button onClick={zoomOut} title="Uzoqlashtirish"><FaSearchMinus /></button>
+              <button onClick={zoomIn} title="Yaqinlashtirish">
+                <FaSearchPlus />
+              </button>
+              <button onClick={zoomOut} title="Uzoqlashtirish">
+                <FaSearchMinus />
+              </button>
               {zoomScale !== 1 && (
-                <button onClick={resetZoom} className="btn-reset-zoom" title="Asliga qaytarish">1:1</button>
+                <button
+                  onClick={resetZoom}
+                  className="btn-reset-zoom"
+                  title="Asliga qaytarish"
+                >
+                  1:1
+                </button>
               )}
             </div>
-            <button className="lightbox-close-btn" onClick={handleCloseLightbox} title="Yopish">
+            <button
+              className="lightbox-close-btn"
+              onClick={handleCloseLightbox}
+              title="Yopish"
+            >
               <FaTimes />
             </button>
           </div>
@@ -307,32 +353,37 @@ function ElonDetails() {
           {/* Lightbox Gallery Content */}
           <div className="lightbox-content">
             {images.length > 1 && (
-              <button className="lightbox-arrow-btn left" onClick={handlePrevImg}>
+              <button
+                className="lightbox-arrow-btn left"
+                onClick={handlePrevImg}
+              >
                 <FaChevronLeft />
               </button>
             )}
 
             <div className="lightbox-image-container">
-              <img 
-                src={images[currentImgIndex]} 
-                alt="Enlarged view" 
-                style={{ 
+              <img
+                src={images[currentImgIndex]}
+                alt="Enlarged view"
+                style={{
                   transform: `scale(${zoomScale})`,
-                  transition: zoomScale === 1 ? "transform 0.2s ease" : "none"
+                  transition: zoomScale === 1 ? "transform 0.2s ease" : "none",
                 }}
                 className="lightbox-img"
               />
             </div>
 
             {images.length > 1 && (
-              <button className="lightbox-arrow-btn right" onClick={handleNextImg}>
+              <button
+                className="lightbox-arrow-btn right"
+                onClick={handleNextImg}
+              >
                 <FaChevronRight />
               </button>
             )}
           </div>
         </div>
       )}
-
     </div>
   );
 }

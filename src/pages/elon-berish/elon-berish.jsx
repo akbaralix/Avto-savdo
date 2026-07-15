@@ -15,7 +15,82 @@ import {
 } from "react-icons/fa";
 import { uploadImageToSupabase } from "../../utils/supabase";
 import TelegramLoginButton from "../../components/TelegramLoginButton/TelegramLoginButton";
+import { toast } from "react-hot-toast";
 import "./elon-berish.css";
+
+const BRANDS_AND_MODELS = {
+  Chevrolet: [
+    "Spark",
+    "Nexia 3",
+    "Cobalt",
+    "Gentra",
+    "Lacetti",
+    "Damas",
+    "Malibu",
+    "Tracker",
+    "Captiva",
+    "Equinox",
+    "Traverse",
+    "Tahoe",
+    "Onix",
+    "Boshqa",
+  ],
+  BYD: [
+    "Song Plus",
+    "Chazor",
+    "Han",
+    "Tang",
+    "Destroyer 05",
+    "Yuan Plus",
+    "Boshqa",
+  ],
+  Kia: [
+    "K5",
+    "Sportage",
+    "Sorento",
+    "Carnival",
+    "Cerato",
+    "Pegas",
+    "Sonet",
+    "Boshqa",
+  ],
+  Hyundai: [
+    "Accent",
+    "Elantra",
+    "Sonata",
+    "Tucson",
+    "Santa Fe",
+    "Palisade",
+    "Creta",
+    "Boshqa",
+  ],
+  Lada: ["Vesta", "Granta", "Niva", "Largus", "XRAY", "Boshqa"],
+  Toyota: [
+    "Camry",
+    "Corolla",
+    "RAV4",
+    "Land Cruiser",
+    "Prado",
+    "Highlander",
+    "Boshqa",
+  ],
+  Daewoo: ["Nexia 1", "Nexia 2", "Matiz", "Damas", "Tico", "Gentra", "Boshqa"],
+  Chery: ["Tiggo 7 Pro", "Tiggo 8 Pro", "Arrizo 6 Pro", "Boshqa"],
+  Geely: ["Monjaro", "Coolray", "Tugella", "Emgrand", "Boshqa"],
+  "Mercedes-Benz": [
+    "C-Class",
+    "E-Class",
+    "S-Class",
+    "G-Class",
+    "GLE",
+    "GLS",
+    "Boshqa",
+  ],
+  BMW: ["3 Series", "5 Series", "7 Series", "X5", "X6", "X7", "M5", "Boshqa"],
+  Boshqa: [],
+};
+
+const UZS_TO_USD_RATE = 12800;
 
 function ElonBerish() {
   const { addCar, user, login } = useContext(AppContext);
@@ -24,9 +99,12 @@ function ElonBerish() {
 
   // Form states
   const [brand, setBrand] = useState("");
+  const [customBrand, setCustomBrand] = useState("");
   const [model, setModel] = useState("");
+  const [customModel, setCustomModel] = useState("");
   const [year, setYear] = useState("");
   const [price, setPrice] = useState("");
+  const [priceCurrency, setPriceCurrency] = useState("USD");
   const [mileage, setMileage] = useState("");
   const [transmission, setTransmission] = useState("Avtomat");
   const [fuel, setFuel] = useState("Benzin");
@@ -35,7 +113,7 @@ function ElonBerish() {
   const [color, setColor] = useState("");
   const [city, setCity] = useState("Toshkent");
   const [description, setDescription] = useState("");
-  const [ownerPhone, setOwnerPhone] = useState("");
+  const [ownerPhone, setOwnerPhone] = useState("+998");
 
   // Image Upload states
   const [uploadedImages, setUploadedImages] = useState([]);
@@ -75,19 +153,68 @@ function ElonBerish() {
     }
   };
 
+  const handleBrandChange = (e) => {
+    const selected = e.target.value;
+    setBrand(selected);
+    setModel("");
+    setCustomModel("");
+    if (selected !== "Boshqa") {
+      setCustomBrand("");
+    }
+  };
+
+  const handleModelChange = (e) => {
+    const selected = e.target.value;
+    setModel(selected);
+    if (selected !== "Boshqa") {
+      setCustomModel("");
+    }
+  };
+
+  const handlePhoneChange = (e) => {
+    let val = e.target.value;
+
+    // If they try to clear or make it shorter than the prefix
+    if (!val.startsWith("+998")) {
+      val = "+998";
+    }
+
+    // Extract only digits after +998
+    const suffix = val.substring(4).replace(/\D/g, "");
+
+    // Format the suffix: max 9 digits
+    let digits = suffix.substring(0, 9);
+
+    let formatted = "+998 ";
+    if (digits.length > 0) {
+      formatted += " (" + digits.substring(0, 2);
+    }
+    if (digits.length > 2) {
+      formatted += ") " + digits.substring(2, 5);
+    }
+    if (digits.length > 5) {
+      formatted += "-" + digits.substring(5, 7);
+    }
+    if (digits.length > 7) {
+      formatted += "-" + digits.substring(7, 9);
+    }
+
+    setOwnerPhone(formatted);
+  };
+
   const handleFiles = async (files) => {
     const fileList = Array.from(files);
 
     // Check if adding files exceeds the limit
     if (uploadedImages.length + fileList.length > 10) {
-      alert("Ko'pi bilan 10 ta rasm yuklash mumkin.");
+      toast.error("Ko'pi bilan 10 ta rasm yuklash mumkin.");
       return;
     }
 
     setUploading(true);
     const uploadPromises = fileList.map(async (file) => {
       if (!file.type.startsWith("image/")) {
-        alert(`${file.name} - rasm fayli emas!`);
+        toast.error(`${file.name} - rasm fayli emas!`);
         return null;
       }
       try {
@@ -95,7 +222,7 @@ function ElonBerish() {
         return url;
       } catch (err) {
         console.error("Fayl yuklashda xatolik:", err);
-        alert(`${file.name} rasmini yuklashda xatolik yuz berdi.`);
+        toast.error(`${file.name} rasmini yuklashda xatolik yuz berdi.`);
         return null;
       }
     });
@@ -112,70 +239,94 @@ function ElonBerish() {
     );
   };
 
-  const handleTelegramAuth = async (authData) => {
-    try {
-      setAuthError(null);
-      setAuthLoading(true);
-      await login(authData);
-      setShowLoginModal(false);
-      // Wait a tiny moment and show confirmation dialog
-      setShowConfirmModal(true);
-    } catch (err) {
-      setAuthError(
-        err.message || "Avtorizatsiyadan o'tishda xatolik yuz berdi",
-      );
-    } finally {
-      setAuthLoading(false);
-    }
+  const handleTelegramAuth = () => {
+    setShowLoginModal(false);
+    setShowConfirmModal(true);
   };
 
   const submitAdData = async () => {
     const defaultImage =
       "https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=600&q=80";
 
+    const finalPrice =
+      priceCurrency === "UZS"
+        ? Math.round(parseFloat(price) / UZS_TO_USD_RATE)
+        : parseFloat(price);
+
+    const finalPhone = "+998" + ownerPhone.substring(4).replace(/\D/g, "");
+    const finalBrand = brand === "Boshqa" ? customBrand : brand;
+    const finalModel =
+      model === "Boshqa" || brand === "Boshqa" ? customModel : model;
+
     const newCar = {
-      brand,
-      model,
+      brand: finalBrand,
+      model: finalModel,
       year: parseInt(year),
-      price: parseFloat(price),
+      price: finalPrice,
       mileage: parseFloat(mileage),
       transmission,
       fuel,
       category,
-      engineVolume: engineVolume || "1.5 L",
-      color: color || "Oq",
+      engineVolume: engineVolume || "0",
+      color: color || "Belgilanmagan",
       city,
       image: uploadedImages[0] || defaultImage,
       images: uploadedImages,
       description:
         description ||
         "Avtomobil yaxshi holatda, barcha texnik ko'riklardan o'tgan.",
-      ownerPhone,
+      ownerPhone: finalPhone,
     };
 
     try {
       await addCar(newCar);
-      alert("E'loningiz muvaffaqiyatli joylashtirildi!");
+      toast.success("E'loningiz muvaffaqiyatli joylashtirildi!");
       setShowConfirmModal(false);
       navigate("/elonlar");
     } catch (error) {
-      alert("E'lonni saqlashda xatolik yuz berdi: " + error.message);
+      toast.error("E'lonni saqlashda xatolik yuz berdi: " + error.message);
     }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!brand || !model || !year || !price || !mileage || !ownerPhone) {
-      alert(
-        "Iltimos, yulduzcha (*) belgilangan barcha maydonlarni to'ldiring.",
-      );
+    const finalBrand = brand === "Boshqa" ? customBrand : brand;
+    const finalModel =
+      model === "Boshqa" || brand === "Boshqa" ? customModel : model;
+    const digitsOnly = ownerPhone.substring(4).replace(/\D/g, "");
+
+    if (
+      !finalBrand ||
+      !finalModel ||
+      !year ||
+      !price ||
+      !mileage ||
+      !ownerPhone ||
+      !description
+    ) {
+      toast.error("Iltimos berilgan barcha maydonlarni to'ldiring.");
+      return;
+    }
+
+    if (digitsOnly.length !== 9) {
+      toast.error("Sotuvchi telefon raqamini to'liq kiriting.");
+      return;
+    }
+
+    const priceNum = parseFloat(price);
+    if (priceCurrency === "USD" && priceNum < 100) {
+      toast.error("Minimal narx 100$ bo'lishi kerak.");
+      return;
+    }
+    if (priceCurrency === "UZS" && priceNum < 1000000) {
+      toast.error("Minimal narx 1,000,000 so'm bo'lishi kerak.");
       return;
     }
 
     // Min 1 image validation
     if (uploadedImages.length < 1) {
-      alert("Iltimos, kamida 1 ta avtomobil rasmini yuklang.");
+      toast.error("Iltimos, kamida 1 ta avtomobil rasmini yuklang.");
       return;
     }
 
@@ -223,25 +374,68 @@ function ElonBerish() {
           <div className="form-grid">
             <div className="form-group">
               <label>Markasi *</label>
-              <input
-                type="text"
-                placeholder="Masalan: Chevrolet, BYD, Kia"
-                value={brand}
-                onChange={(e) => setBrand(e.target.value)}
-                required
-              />
+              <select value={brand} onChange={handleBrandChange} required>
+                <option value="">Markani tanlang</option>
+                {Object.keys(BRANDS_AND_MODELS).map((b) => (
+                  <option key={b} value={b}>
+                    {b}
+                  </option>
+                ))}
+              </select>
             </div>
+
+            {brand === "Boshqa" && (
+              <div className="form-group">
+                <label>Boshqa marka nomi *</label>
+                <input
+                  type="text"
+                  placeholder="Markani yozing (masalan: BYD)"
+                  value={customBrand}
+                  onChange={(e) => setCustomBrand(e.target.value)}
+                  required
+                />
+              </div>
+            )}
 
             <div className="form-group">
               <label>Modeli *</label>
-              <input
-                type="text"
-                placeholder="Masalan: Gentra, Song Plus, K5"
-                value={model}
-                onChange={(e) => setModel(e.target.value)}
-                required
-              />
+              {brand && brand !== "Boshqa" ? (
+                <select value={model} onChange={handleModelChange} required>
+                  <option value="">Modelni tanlang</option>
+                  {BRANDS_AND_MODELS[brand].map((m) => (
+                    <option key={m} value={m}>
+                      {m}
+                    </option>
+                  ))}
+                </select>
+              ) : (
+                <input
+                  type="text"
+                  placeholder={
+                    brand === "Boshqa"
+                      ? "Modelni yozing"
+                      : "Avval markani tanlang"
+                  }
+                  value={brand === "Boshqa" ? customModel : ""}
+                  onChange={(e) => setCustomModel(e.target.value)}
+                  disabled={brand !== "Boshqa"}
+                  required
+                />
+              )}
             </div>
+
+            {model === "Boshqa" && brand !== "Boshqa" && (
+              <div className="form-group">
+                <label>Boshqa model nomi *</label>
+                <input
+                  type="text"
+                  placeholder="Modelni yozing (masalan: Equinox)"
+                  value={customModel}
+                  onChange={(e) => setCustomModel(e.target.value)}
+                  required
+                />
+              </div>
+            )}
 
             <div className="form-group">
               <label>
@@ -260,15 +454,43 @@ function ElonBerish() {
 
             <div className="form-group">
               <label>
-                <FaMoneyBillWave /> Narxi ($) *
+                <FaMoneyBillWave /> Narxi *
               </label>
-              <input
-                type="number"
-                placeholder="Masalan: 12500"
-                value={price}
-                onChange={(e) => setPrice(e.target.value)}
-                required
-              />
+              <div
+                className="price-input-container"
+                style={{ display: "flex", gap: "8px" }}
+              >
+                <input
+                  type="number"
+                  placeholder={
+                    priceCurrency === "USD"
+                      ? "Masalan: 12 500 $ (min 100$)"
+                      : "Masalan: 1 300 0000 (min 1 mln)"
+                  }
+                  value={price}
+                  onChange={(e) => setPrice(e.target.value)}
+                  style={{ flex: 1 }}
+                  required
+                />
+                <select
+                  value={priceCurrency}
+                  onChange={(e) => {
+                    setPriceCurrency(e.target.value);
+                    setPrice("");
+                  }}
+                  style={{
+                    width: "90px",
+                    padding: "10px",
+                    borderRadius: "8px",
+                    border: "1px solid #edf2f7",
+                    fontWeight: "600",
+                    cursor: "pointer",
+                  }}
+                >
+                  <option value="USD">USD ($)</option>
+                  <option value="UZS">UZS (so'm)</option>
+                </select>
+              </div>
             </div>
           </div>
 
@@ -454,9 +676,9 @@ function ElonBerish() {
               </label>
               <input
                 type="text"
-                placeholder="Masalan: +998 90 123 45 67"
+                placeholder="+998 (90) 123-45-67"
                 value={ownerPhone}
-                onChange={(e) => setOwnerPhone(e.target.value)}
+                onChange={handlePhoneChange}
                 required
               />
             </div>
@@ -470,31 +692,18 @@ function ElonBerish() {
 
       {/* Login Modal Overlay */}
       {showLoginModal && (
-        <div className="eb-modal-overlay">
+        <div
+          className="eb-modal-overlay"
+          onClick={() => setShowLoginModal(false)}
+        >
           <div className="eb-modal-card">
             <h3>Tizimga kirish</h3>
             <p>
               E'loningizni saqlab qolish va platformada e'lon berish uchun
               iltimos, Telegram orqali profilingizga kiring.
             </p>
-
-            {authError && <div className="eb-auth-error">{authError}</div>}
-
             <div className="eb-login-btn-container">
-              {authLoading ? (
-                <div className="eb-auth-spinner">
-                  <FaSpinner className="spinner-icon spinning" />
-                  <span>Tekshirilmoqda, iltimos kuting...</span>
-                </div>
-              ) : (
-                <TelegramLoginButton
-                  botName={
-                    import.meta.env.VITE_TELEGRAM_BOT_USERNAME ||
-                    "YOUR_TELEGRAM_BOT_USERNAME"
-                  }
-                  onAuth={handleTelegramAuth}
-                />
-              )}
+              <TelegramLoginButton onAuth={handleTelegramAuth} />
             </div>
 
             <button

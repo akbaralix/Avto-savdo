@@ -1,14 +1,12 @@
 .profile-container {
   padding-top: 100px;
   min-height: calc(100vh - 100px);
-  background-color: #f8fafc;
   display: flex;
   justify-content: center;
   align-items: flex-start;
   box-sizing: border-box;
 }
 
-/* 1. Logged Out State Styles */
 .profile-container.logged-out {
   align-items: center;
   padding: 120px 20px 40px;
@@ -23,12 +21,9 @@
   max-width: 450px;
   width: 100%;
   text-align: center;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.login-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
 .login-icon-wrapper {
@@ -92,16 +87,10 @@
   padding: 14px 24px;
   border-radius: 12px;
   font-size: 15px;
-  font-weight: 700;
   cursor: pointer;
   width: 100%;
   transition: all 0.2s ease;
   box-shadow: 0 4px 15px rgba(0, 136, 204, 0.2);
-}
-
-.tg-mock-btn:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 6px 20px rgba(0, 136, 204, 0.3);
 }
 
 .tg-mock-warning {
@@ -137,8 +126,12 @@
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 .login-footer p {
@@ -252,7 +245,6 @@
   padding: 12px;
   border-radius: 12px;
   font-size: 15px;
-  font-weight: 700;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -302,22 +294,17 @@
 }
 
 .add-new-ad-btn {
-  background-color: #000000;
+  background-color: #2e31d3;
   color: #ffffff;
   padding: 12px 20px;
   border-radius: 12px;
+  margin-top: 10px;
   font-size: 14px;
-  font-weight: 700;
   display: flex;
   align-items: center;
   gap: 8px;
   text-decoration: none;
   transition: all 0.2s ease;
-}
-
-.add-new-ad-btn:hover {
-  background-color: #2e31d3;
-  transform: translateY(-1px);
 }
 
 .profile-loading {
@@ -415,7 +402,6 @@
   padding: 10px 16px;
   border-radius: 10px;
   font-size: 13px;
-  font-weight: 600;
   transition: all 0.2s ease;
   border: 1px solid #e2e8f0;
 }
@@ -438,18 +424,12 @@
   justify-content: center;
 }
 
-.action-delete-btn:hover {
-  background-color: #fed7d7;
-  color: #c53030;
-}
-
 /* No Ads Empty State */
 .no-ads-card {
   text-align: center;
   padding: 60px 20px;
   background-color: #f8fafc;
   border-radius: 15px;
-  border: 1px dashed #cbd5e1;
 }
 
 .no-ads-icon-wrapper {
@@ -492,7 +472,6 @@
   padding: 12px 24px;
   border-radius: 10px;
   font-size: 14px;
-  font-weight: 700;
   transition: all 0.2s ease;
 }
 
@@ -505,7 +484,7 @@
   .profile-layout {
     grid-template-columns: 1fr;
   }
-  
+
   .user-details-card {
     position: static;
   }

@@ -2,10 +2,21 @@ import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AppContext } from "../../context/AppContext";
 import CarDetailModal from "../../components/CarDetailModal/CarDetailModal";
-import { 
-  FaPlus, FaSearch, FaCar, FaMapMarkerAlt,
-  FaRoad, FaCogs, FaGasPump, FaHeart, FaRegHeart,
-  FaShieldAlt, FaThumbsUp, FaCheckCircle
+import {
+  FaPlus,
+  FaSearch,
+  FaCar,
+  FaMapMarkerAlt,
+  FaRoad,
+  FaCogs,
+  FaGasPump,
+  FaHeart,
+  FaRegHeart,
+  FaShieldAlt,
+  FaThumbsUp,
+  FaCheckCircle,
+  FaTelegram,
+  FaInstagram,
 } from "react-icons/fa";
 import "./home.css";
 
@@ -30,7 +41,8 @@ function Home() {
     e.preventDefault();
     let url = "/elonlar?";
     if (selectedBrand) url += `brand=${encodeURIComponent(selectedBrand)}&`;
-    if (selectedCategory) url += `category=${encodeURIComponent(selectedCategory)}&`;
+    if (selectedCategory)
+      url += `category=${encodeURIComponent(selectedCategory)}&`;
     if (selectedCity) url += `city=${encodeURIComponent(selectedCity)}&`;
     navigate(url.slice(0, -1)); // remove trailing & or ?
   };
@@ -84,40 +96,52 @@ function Home() {
       <div className="search-filter-section">
         <form onSubmit={handleSearch} className="search-form">
           <div className="filter-group">
-            <label><FaCar /> Marka</label>
+            <label>
+              <FaCar /> Marka
+            </label>
             <select
               value={selectedBrand}
               onChange={(e) => setSelectedBrand(e.target.value)}
             >
               <option value="">Barchasi</option>
               {brands.map((b) => (
-                <option key={b} value={b}>{b}</option>
+                <option key={b} value={b}>
+                  {b}
+                </option>
               ))}
             </select>
           </div>
 
           <div className="filter-group">
-            <label><FaCar /> Kuzov turi</label>
+            <label>
+              <FaCar /> Kuzov turi
+            </label>
             <select
               value={selectedCategory}
               onChange={(e) => setSelectedCategory(e.target.value)}
             >
               <option value="">Barchasi</option>
               {categories.map((c) => (
-                <option key={c} value={c}>{c}</option>
+                <option key={c} value={c}>
+                  {c}
+                </option>
               ))}
             </select>
           </div>
 
           <div className="filter-group">
-            <label><FaMapMarkerAlt /> Shahar</label>
+            <label>
+              <FaMapMarkerAlt /> Shahar
+            </label>
             <select
               value={selectedCity}
               onChange={(e) => setSelectedCity(e.target.value)}
             >
               <option value="">Barchasi</option>
               {cities.map((c) => (
-                <option key={c} value={c}>{c}</option>
+                <option key={c} value={c}>
+                  {c}
+                </option>
               ))}
             </select>
           </div>
@@ -136,9 +160,9 @@ function Home() {
         </div>
         <div className="categories-grid">
           {["Sedan", "Krossover", "Elektromobil", "Xetchbek"].map((cat) => (
-            <div 
-              key={cat} 
-              className="category-card" 
+            <div
+              key={cat}
+              className="category-card"
               onClick={() => handleCategoryClick(cat)}
             >
               <div className="category-icon-wrapper">
@@ -176,21 +200,36 @@ function Home() {
 
                 <div className="car-card-body">
                   <div className="car-title-row">
-                    <h3>{car.brand} {car.model}</h3>
+                    <h3>
+                      {car.brand} {car.model}
+                    </h3>
                     <span className="car-card-year">{car.year}-yil</span>
                   </div>
-                  
-                  <div className="car-city"><FaMapMarkerAlt /> {car.city}</div>
+
+                  <div className="car-city">
+                    <FaMapMarkerAlt /> {car.city}
+                  </div>
 
                   <div className="car-specs">
-                    <span title="Yurgani"><FaRoad /> {car.mileage.toLocaleString()} km</span>
-                    <span title="KPP"><FaCogs /> {car.transmission}</span>
-                    <span title="Yoqilg'i"><FaGasPump /> {car.fuel}</span>
+                    <span title="Yurgani">
+                      <FaRoad /> {car.mileage.toLocaleString()} km
+                    </span>
+                    <span title="KPP">
+                      <FaCogs /> {car.transmission}
+                    </span>
+                    <span title="Yoqilg'i">
+                      <FaGasPump /> {car.fuel}
+                    </span>
                   </div>
 
                   <div className="car-card-footer">
-                    <div className="car-price">${car.price.toLocaleString()}</div>
-                    <button className="view-details-btn" onClick={() => setSelectedCar(car)}>
+                    <div className="car-price">
+                      ${car.price.toLocaleString()}
+                    </div>
+                    <button
+                      className="view-details-btn"
+                      onClick={() => setSelectedCar(car)}
+                    >
                       Batafsil
                     </button>
                   </div>
@@ -218,17 +257,26 @@ function Home() {
           <div className="advantage-card">
             <FaShieldAlt className="adv-icon" />
             <h3>Xavfsiz Xarid</h3>
-            <p>Barcha e'lonlar va sotuvchilar foydalanuvchilar xavfsizligi uchun tekshiriladi.</p>
+            <p>
+              Barcha e'lonlar va sotuvchilar foydalanuvchilar xavfsizligi uchun
+              tekshiriladi.
+            </p>
           </div>
           <div className="advantage-card">
             <FaThumbsUp className="adv-icon" />
             <h3>Oson va Tezkor</h3>
-            <p>E'lon joylashtirish va avtomobil qidirish atigi bir necha daqiqani oladi.</p>
+            <p>
+              E'lon joylashtirish va avtomobil qidirish atigi bir necha daqiqani
+              oladi.
+            </p>
           </div>
           <div className="advantage-card">
             <FaCheckCircle className="adv-icon" />
             <h3>Keng Tanlov</h3>
-            <p>Mamlakatimiz bo'yicha minglab yangi va foydalanilgan mashinalar ro'yxati.</p>
+            <p>
+              Mamlakatimiz bo'yicha minglab yangi va foydalanilgan mashinalar
+              ro'yxati.
+            </p>
           </div>
         </div>
       </section>
@@ -253,11 +301,21 @@ function Home() {
           <div className="footer-links">
             <h4>Sahifalar</h4>
             <ul>
-              <li><Link to="/">Bosh sahifa</Link></li>
-              <li><Link to="/elonlar">E'lonlar</Link></li>
-              <li><Link to="/sevimli">Sevimlilar</Link></li>
-              <li><Link to="/xizmatlar">Xizmatlar</Link></li>
-              <li><Link to="/yordam">Yordam</Link></li>
+              <li>
+                <Link to="/">Bosh sahifa</Link>
+              </li>
+              <li>
+                <Link to="/elonlar">E'lonlar</Link>
+              </li>
+              <li>
+                <Link to="/sevimli">Sevimlilar</Link>
+              </li>
+              <li>
+                <Link to="/xizmatlar">Xizmatlar</Link>
+              </li>
+              <li>
+                <Link to="/yordam">Yordam</Link>
+              </li>
             </ul>
           </div>
           <div className="footer-contact">
@@ -265,9 +323,27 @@ function Home() {
             <p>Telefon: +998 (71) 123-45-67</p>
             <p>Email: support@avtosavdo.uz</p>
           </div>
+          <div className="footer-social">
+            <h4>Ijtimoiy tarmoqlarimiz</h4>
+            <Link to={"https://t.me/avtosavdo"}>
+              <p>Telegram</p>
+              <span>
+                <FaTelegram />
+              </span>
+            </Link>
+            <Link to={"https://instagram.com/avtosavto"}>
+              <p>Instagram</p>
+              <span>
+                <FaInstagram />
+              </span>
+            </Link>
+          </div>
         </div>
         <div className="footer-bottom">
-          <p>&copy; {new Date().getFullYear()} AvtoSavdo. Barcha huquqlar himoyalangan.</p>
+          <p>
+            &copy; {new Date().getFullYear()} AvtoSavdo. Barcha huquqlar
+            himoyalangan.
+          </p>
         </div>
       </footer>
     </div>

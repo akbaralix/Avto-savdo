@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
-import { useSearchParams } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { AppContext } from "../../context/AppContext";
 import CarDetailModal from "../../components/CarDetailModal/CarDetailModal";
 import {
@@ -229,55 +229,60 @@ function Elonlar() {
               {filteredCars.map((car) => {
                 const isFav = favorites.includes(car.id);
                 return (
-                  <div key={car.id} className="car-card">
-                    <div className="car-card-image">
-                      <img src={car.image} alt={`${car.brand} ${car.model}`} />
-                      <button
-                        className={`favorite-btn ${isFav ? "active" : ""}`}
-                        onClick={() => toggleFavorite(car.id)}
-                      >
-                        {isFav ? <FaHeart /> : <FaRegHeart />}
-                      </button>
-                      <span className="car-category-tag">{car.category}</span>
-                    </div>
-
-                    <div className="car-card-body">
-                      <div className="car-title-row">
-                        <h3>
-                          {car.brand} {car.model}
-                        </h3>
-                        <span className="car-card-year">{car.year}-yil</span>
-                      </div>
-
-                      <div className="car-city">
-                        <FaMapMarkerAlt /> {car.city}
-                      </div>
-
-                      <div className="car-specs">
-                        <span title="Yurgani">
-                          <FaRoad /> {car.mileage.toLocaleString()} km
-                        </span>
-                        <span title="KPP">
-                          <FaCogs /> {car.transmission}
-                        </span>
-                        <span title="Yoqilg'i">
-                          <FaGasPump /> {car.fuel}
-                        </span>
-                      </div>
-
-                      <div className="car-card-footer">
-                        <div className="car-price">
-                          ${car.price.toLocaleString()}
-                        </div>
+                  <Link to={`/elon/${car._id}`}>
+                    <div key={car.id} className="car-card">
+                      <div className="car-card-image">
+                        <img
+                          src={car.image}
+                          alt={`${car.brand} ${car.model}`}
+                        />
                         <button
-                          className="view-details-btn"
-                          onClick={() => setSelectedCar(car)}
+                          className={`favorite-btn ${isFav ? "active" : ""}`}
+                          onClick={() => toggleFavorite(car.id)}
                         >
-                          Batafsil
+                          {isFav ? <FaHeart /> : <FaRegHeart />}
                         </button>
+                        <span className="car-category-tag">{car.category}</span>
+                      </div>
+
+                      <div className="car-card-body">
+                        <div className="car-title-row">
+                          <h3>
+                            {car.brand} {car.model}
+                          </h3>
+                          <span className="car-card-year">{car.year}-yil</span>
+                        </div>
+
+                        <div className="car-city">
+                          <FaMapMarkerAlt /> {car.city}
+                        </div>
+
+                        <div className="car-specs">
+                          <span title="Yurgani">
+                            <FaRoad /> {car.mileage.toLocaleString()} km
+                          </span>
+                          <span title="KPP">
+                            <FaCogs /> {car.transmission}
+                          </span>
+                          <span title="Yoqilg'i">
+                            <FaGasPump /> {car.fuel}
+                          </span>
+                        </div>
+
+                        <div className="car-card-footer">
+                          <div className="car-price">
+                            ${car.price.toLocaleString()}
+                          </div>
+                          <button
+                            className="view-details-btn"
+                            onClick={() => setSelectedCar(car)}
+                          >
+                            Batafsil
+                          </button>
+                        </div>
                       </div>
                     </div>
-                  </div>
+                  </Link>
                 );
               })}
             </div>

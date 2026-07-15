@@ -2,7 +2,18 @@ import React, { useContext, useEffect, useState, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { AppContext } from "../../context/AppContext";
 import TelegramLoginButton from "../../components/TelegramLoginButton/TelegramLoginButton";
-import { FaUser, FaPlus, FaTrash, FaSignOutAlt, FaCar, FaMapMarkerAlt, FaCalendarAlt, FaExternalLinkAlt, FaHourglassHalf } from "react-icons/fa";
+import {
+  FaUser,
+  FaPlus,
+  FaTrash,
+  FaSignOutAlt,
+  FaCar,
+  FaMapMarkerAlt,
+  FaCalendarAlt,
+  FaExternalLinkAlt,
+  FaHourglassHalf,
+} from "react-icons/fa";
+import { toast } from "react-hot-toast";
 import "./profile.css";
 
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
@@ -22,22 +33,23 @@ function Profile() {
       setLoadingCars(true);
       const res = await fetch(`${API_URL}/api/products/my`, {
         headers: {
-          "Authorization": `Bearer ${token}`
-        }
+          Authorization: `Bearer ${token}`,
+        },
       });
       if (res.ok) {
         const data = await res.json();
         const normalized = data.map((car) => {
           const id = car._id || car.id;
-          const images = car.images && car.images.length > 0 
-            ? car.images 
-            : [car.image || "https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=600&q=80"];
+          const images =
+            car.images && car.images.length > 0
+              ? car.images
+              : [car.image || "/assets/devault-avatar.jpg"];
           return {
             ...car,
             id,
             _id: id,
             images,
-            image: images[0]
+            image: images[0],
           };
         });
         setMyCars(normalized);
@@ -57,32 +69,28 @@ function Profile() {
     }
   }, [token, fetchMyCars]);
 
-  const handleTelegramAuth = async (authData) => {
-    try {
-      setAuthError(null);
-      setAuthLoading(true);
-      await login(authData);
-    } catch (err) {
-      setAuthError(err.message || "Avtorizatsiyadan o'tishda xatolik yuz berdi");
-    } finally {
-      setAuthLoading(false);
-    }
+  const handleTelegramAuth = () => {
+    // Login completes automatically inside TelegramLoginButton
   };
 
   const handleDeleteAd = async (carId) => {
-    if (window.confirm("Haqiqatan ham ushbu e'lonni o'chirib tashlamoqchimisiz?")) {
+    if (
+      window.confirm("Haqiqatan ham ushbu e'lonni o'chirib tashlamoqchimisiz?")
+    ) {
       try {
         await deleteCar(carId);
         setMyCars((prev) => prev.filter((c) => c._id !== carId));
-        alert("E'lon muvaffaqiyatli o'chirildi!");
+        toast.success("E'lon muvaffaqiyatli o'chirildi!");
       } catch (err) {
-        alert(err.message || "E'lonni o'chirishda xatolik yuz berdi");
+        toast.error(err.message || "E'lonni o'chirishda xatolik yuz berdi");
       }
     }
   };
 
   const getBotUsername = () => {
-    return import.meta.env.VITE_TELEGRAM_BOT_USERNAME || "YOUR_TELEGRAM_BOT_USERNAME";
+    return (
+      import.meta.env.VITE_TELEGRAM_BOT_USERNAME || "YOUR_TELEGRAM_BOT_USERNAME"
+    );
   };
 
   // 1. Not Logged In View
@@ -95,23 +103,14 @@ function Profile() {
               <FaUser className="login-icon" />
             </div>
             <h2>Shaxsiy profil</h2>
-            <p>E'lonlarni boshqarish va yangilarini joylashtirish uchun hisobingizga kiring</p>
+            <p>
+              E'lonlarni boshqarish va yangilarini joylashtirish uchun
+              hisobingizga kiring
+            </p>
           </div>
 
-          {authError && <div className="auth-error-box">{authError}</div>}
-
           <div className="login-action-container">
-            {authLoading ? (
-              <div className="auth-spinner">
-                <FaHourglassHalf className="spinner-icon spinning" />
-                <span>Tekshirilmoqda, iltimos kuting...</span>
-              </div>
-            ) : (
-              <TelegramLoginButton
-                botName={getBotUsername()}
-                onAuth={handleTelegramAuth}
-              />
-            )}
+            <TelegramLoginButton onAuth={handleTelegramAuth} />
           </div>
 
           <div className="login-footer">
@@ -131,10 +130,14 @@ function Profile() {
           <div className="user-details-card">
             <div className="avatar-wrapper">
               {user.photo_url ? (
-                <img src={user.photo_url} alt="Profile" className="user-avatar" />
+                <img
+                  src={user.photo_url}
+                  alt="Profile"
+                  className="user-avatar"
+                />
               ) : (
                 <div className="avatar-placeholder">
-                  <FaUser />
+                  <img src="/src/assets/devault-avatar.jpg" alt="" />
                 </div>
               )}
             </div>
@@ -143,9 +146,7 @@ function Profile() {
               {user.first_name} {user.last_name}
             </h2>
 
-            {user.username && (
-              <p className="user-username">@{user.username}</p>
-            )}
+            {user.username && <p className="user-username">@{user.username}</p>}
 
             <div className="user-meta">
               <span className="meta-label">Telegram ID:</span>
@@ -180,27 +181,45 @@ function Profile() {
               {myCars.map((car) => (
                 <div key={car._id} className="my-car-row">
                   <div className="my-car-img-wrapper">
-                    <img 
-                      src={car.images && car.images.length > 0 ? car.images[0] : (car.image || "https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=150&q=80")} 
-                      alt={`${car.brand} ${car.model}`} 
+                    <img
+                      src={
+                        car.images && car.images.length > 0
+                          ? car.images[0]
+                          : car.image ||
+                            "https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=150&q=80"
+                      }
+                      alt={`${car.brand} ${car.model}`}
                     />
                   </div>
 
                   <div className="my-car-info">
-                    <h3>{car.brand} {car.model}</h3>
+                    <h3>
+                      {car.brand} {car.model}
+                    </h3>
                     <div className="my-car-details">
-                      <span><FaCalendarAlt /> {car.year}-yil</span>
-                      <span><FaMapMarkerAlt /> {car.city}</span>
+                      <span>
+                        <FaCalendarAlt /> {car.year}-yil
+                      </span>
+                      <span>
+                        <FaMapMarkerAlt /> {car.city}
+                      </span>
                     </div>
-                    <div className="my-car-price">${car.price.toLocaleString()}</div>
+                    <div className="my-car-price">
+                      ${car.price.toLocaleString()}
+                    </div>
                   </div>
 
                   <div className="my-car-actions">
-                    <Link to={`/elon/${car._id}`} target="_blank" className="action-view-btn" title="Sahifani ko'rish">
+                    <Link
+                      to={`/elon/${car._id}`}
+                      target="_blank"
+                      className="action-view-btn"
+                      title="Sahifani ko'rish"
+                    >
                       <FaExternalLinkAlt /> Ko'rish
                     </Link>
-                    <button 
-                      className="action-delete-btn" 
+                    <button
+                      className="action-delete-btn"
                       onClick={() => handleDeleteAd(car._id)}
                       title="O'chirish"
                     >
@@ -216,7 +235,10 @@ function Profile() {
                 <FaCar className="no-ads-icon" />
               </div>
               <h3>Hozircha hech qanday e'loningiz yo'q</h3>
-              <p>Sotiladigan avtomobilingiz bormi? Birinchi e'loningizni hoziroq joylashtiring!</p>
+              <p>
+                Sotiladigan avtomobilingiz bormi? Birinchi e'loningizni hoziroq
+                joylashtiring!
+              </p>
               <Link to="/elon-berish" className="create-first-ad-btn">
                 E'lon berishni boshlash
               </Link>

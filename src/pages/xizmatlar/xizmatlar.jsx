@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { FaCalculator, FaShieldAlt, FaCar, FaWrench } from "react-icons/fa";
+import { toast } from "react-hot-toast";
 import "./xizmatlar.css";
 
 function Xizmatlar() {
@@ -161,7 +162,7 @@ function Xizmatlar() {
               <strong>${Math.round(monthlyPayment).toLocaleString()} / oy</strong>
             </div>
 
-            <button className="apply-loan-btn" onClick={() => alert("Kredit arizangiz qabul qilindi. Tez orada hamkor banklarimiz vakillari bog'lanishadi.")}>
+            <button className="apply-loan-btn" onClick={() => toast.success("Kredit arizangiz qabul qilindi. Tez orada hamkor banklarimiz vakillari bog'lanishadi.")}>
               Kredit rasmiylashtirish
             </button>
             

@@ -97,6 +97,14 @@ export function AppProvider({ children }) {
     }
   };
 
+  // Direct login with user data and token
+  const loginWithUserData = (userData, userToken) => {
+    setToken(userToken);
+    setUser(userData);
+    localStorage.setItem("avto_savdo_token", userToken);
+    localStorage.setItem("avto_savdo_user", JSON.stringify(userData));
+  };
+
   // Logout handler
   const logout = () => {
     setToken(null);
@@ -190,6 +198,7 @@ export function AppProvider({ children }) {
         loading,
         favorites,
         login,
+        loginWithUserData,
         logout,
         toggleFavorite,
         addCar,

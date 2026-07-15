@@ -12,7 +12,7 @@
 
 .elonlar-header h1 {
   font-size: 32px;
-  font-weight: 800;
+  font-weight: 500;
   color: #1a202c;
 }
 
@@ -73,11 +73,6 @@
     color 0.2s ease;
 }
 
-.toggle-filters-btn:hover {
-  background: #e2e6ea;
-  color: #212529;
-}
-
 /* Animatsiya konteyneri: yopiq holatda */
 .filters-collapsible {
   max-height: 0;
@@ -111,15 +106,10 @@
   border: none;
   color: #2e31d3;
   font-size: 13px;
-  font-weight: 700;
   cursor: pointer;
   padding: 4px 8px;
   border-radius: 6px;
   transition: all 0.2s ease;
-}
-
-.reset-filters-btn:hover {
-  background-color: rgba(46, 49, 211, 0.05);
 }
 
 .filter-item {
@@ -196,9 +186,8 @@
 .no-cars-found {
   text-align: center;
   padding: 60px 20px;
-  background-color: #f7fafc;
+
   border-radius: 24px;
-  border: 1px dashed #cbd5e0;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -219,16 +208,11 @@
 .clear-btn {
   background-color: #2e31d3;
   color: #ffffff;
+  font-size: 15px;
   padding: 12px 24px;
-  font-weight: 700;
   border-radius: 10px;
   transition: all 0.2s ease;
   margin-top: 10px;
-}
-
-.clear-btn:hover {
-  background-color: #1a1d9b;
-  transform: translateY(-2px);
 }
 
 @media (max-width: 1100px) {
@@ -250,5 +234,11 @@
 @media (max-width: 600px) {
   .elonlar-grid {
     grid-template-columns: 1fr;
+  }
+  .elonlar-header h1 {
+    font-size: 1.4rem;
+  }
+  .elonlar-header p {
+    font-size: 0.9rem;
   }
 }

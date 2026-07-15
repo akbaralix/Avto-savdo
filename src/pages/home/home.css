@@ -316,11 +316,21 @@
   .categories-grid {
     grid-template-columns: repeat(2, 1fr);
   }
+  .promo-banner-img {
+    display: none;
+  }
 }
 
 @media (max-width: 500px) {
   .categories-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .category-card {
+    padding: 10px;
+    gap: 5px;
+  }
+  .category-card h3 {
+    font-weight: 500;
   }
 }
 
@@ -558,7 +568,7 @@
 
 .advantage-card h3 {
   font-size: 18px;
-  font-weight: 800;
+  font-weight: 700;
   color: #1a202c;
 }
 
@@ -573,9 +583,13 @@
     grid-template-columns: 1fr;
     gap: 20px;
   }
+  .advantage-card {
+    padding: 20px;
+    font-weight: 400;
+    gap: 10px;
+  }
 }
 
-/* Footer styling */
 .footer {
   background-color: #1a202c;
   color: #ffffff;
@@ -653,6 +667,17 @@
   color: #a0aec0;
   font-size: 14px;
 }
+.footer-social {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.footer-social a {
+  display: flex;
+  gap: 12px;
+  color: #a0aec0;
+  width: fit-content;
+}
 
 .footer-bottom {
   max-width: 1200px;
@@ -670,8 +695,5 @@
   .footer-container {
     grid-template-columns: 1fr;
     gap: 30px;
-  }
-  .footer {
-    border-radius: 0;
   }
 }

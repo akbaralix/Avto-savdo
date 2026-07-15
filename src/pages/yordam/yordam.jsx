@@ -1,33 +1,44 @@
 import React, { useState } from "react";
-import { FaChevronDown, FaChevronUp, FaQuestionCircle, FaPaperPlane } from "react-icons/fa";
+import {
+  FaChevronDown,
+  FaChevronUp,
+  FaQuestionCircle,
+  FaPaperPlane,
+} from "react-icons/fa";
+import { toast } from "react-hot-toast";
 import "./yordam.css";
 
 const FAQS = [
   {
     question: "E'lon berish mutlaqo bepulmi?",
-    answer: "Ha, AvtoSavdo platformasida e'lon berish mutlaqo bepul. Siz istalgan miqdordagi avtomobil e'lonlarini to'lovsiz joylashtirishingiz mumkin."
+    answer:
+      "Ha, AvtoSavdo platformasida e'lon berish mutlaqo bepul. Siz istalgan miqdordagi avtomobil e'lonlarini to'lovsiz joylashtirishingiz mumkin.",
   },
   {
     question: "E'lonim qancha vaqt saytda faol turadi?",
-    answer: "Siz joylashtirgan e'lon avtomobilingiz sotilgunga qadar yoki siz o'chirmaguningizcha saytda faol holatda qoladi."
+    answer:
+      "Siz joylashtirgan e'lon avtomobilingiz sotilgunga qadar yoki siz o'chirmaguningizcha saytda faol holatda qoladi.",
   },
   {
     question: "Sotilgan avtomobil e'lonini qanday o'chirish mumkin?",
-    answer: "E'lonlarni o'chirish juda oson. Agar siz o'zingiz joylashtirgan e'lonni o'chirmoqchi bo'lsangiz, sotuvchi bilan bog'lanish interfeysidagi telefon raqamidan foydalanib bizning qo'llab-quvvatlash tizimimizga murojaat qilishingiz mumkin."
+    answer:
+      "E'lonlarni o'chirish juda oson. Agar siz o'zingiz joylashtirgan e'lonni o'chirmoqchi bo'lsangiz, sotuvchi bilan bog'lanish interfeysidagi telefon raqamidan foydalanib bizning qo'llab-quvvatlash tizimimizga murojaat qilishingiz mumkin.",
   },
   {
     question: "Avtokredit olish tartibi qanday?",
-    answer: "Bizning kalkulyator orqali oylik to'lovlarni hisoblaganingizdan so'ng 'Kredit rasmiylashtirish' tugmasini bosib ariza qoldirasiz. Hamkor banklarimiz 24 soat ichida siz bilan bog'lanib, shartnomani rasmiylashtirishga ko'maklashadi."
+    answer:
+      "Bizning kalkulyator orqali oylik to'lovlarni hisoblaganingizdan so'ng 'Kredit rasmiylashtirish' tugmasini bosib ariza qoldirasiz. Hamkor banklarimiz 24 soat ichida siz bilan bog'lanib, shartnomani rasmiylashtirishga ko'maklashadi.",
   },
   {
     question: "Firibgarlardan qanday himoyalanish mumkin?",
-    answer: "Uchrashuvdan oldin hech qachon zakalat (oldindan to'lov) bermang. Mashinani albatta texnik ko'rikdan o'tkazib, hujjatlarini to'liq notarial rasmiylashtirgandan so'nggina pulini to'lang."
-  }
+    answer:
+      "Uchrashuvdan oldin hech qachon zakalat (oldindan to'lov) bermang. Mashinani albatta texnik ko'rikdan o'tkazib, hujjatlarini to'liq notarial rasmiylashtirgandan so'nggina pulini to'lang.",
+  },
 ];
 
 function Yordam() {
   const [openIndex, setOpenIndex] = useState(null);
-  
+
   // Contact form state
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
@@ -41,7 +52,7 @@ function Yordam() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!name || !phone || !message) {
-      alert("Iltimos barcha maydonlarni to'ldiring.");
+      toast.error("Iltimos barcha maydonlarni to'ldiring.");
       return;
     }
     setSubmitted(true);
@@ -63,13 +74,18 @@ function Yordam() {
       <div className="yordam-content">
         {/* Accordion FAQ */}
         <section className="faq-section">
-          <h2><FaQuestionCircle /> Ko'p so'raladigan savollar</h2>
+          <h2>
+            <FaQuestionCircle /> Ko'p so'raladigan savollar
+          </h2>
           <div className="faq-list">
             {FAQS.map((faq, index) => {
               const isOpen = openIndex === index;
               return (
                 <div key={index} className={`faq-card ${isOpen ? "open" : ""}`}>
-                  <div className="faq-question" onClick={() => toggleFaq(index)}>
+                  <div
+                    className="faq-question"
+                    onClick={() => toggleFaq(index)}
+                  >
                     <h3>{faq.question}</h3>
                     {isOpen ? <FaChevronUp /> : <FaChevronDown />}
                   </div>
@@ -87,14 +103,17 @@ function Yordam() {
         {/* Support Request Form */}
         <section className="support-form-section">
           <h2>Qo'llab-quvvatlash tizimi</h2>
-          <p>Savollaringiz yoki takliflaringiz bo'lsa, quyidagi forma orqali xabar yuboring</p>
+          <p>
+            Savollaringiz yoki takliflaringiz bo'lsa, quyidagi forma orqali
+            xabar yuboring
+          </p>
 
           <form onSubmit={handleSubmit} className="support-form">
             <div className="form-group">
               <label>Ismingiz</label>
-              <input 
-                type="text" 
-                placeholder="Masalan: Vali" 
+              <input
+                type="text"
+                placeholder=" "
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 required
@@ -103,9 +122,9 @@ function Yordam() {
 
             <div className="form-group">
               <label>Telefon raqamingiz</label>
-              <input 
-                type="text" 
-                placeholder="Masalan: +998 90 123 45 67" 
+              <input
+                type="text"
+                placeholder=" "
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
                 required
@@ -114,9 +133,9 @@ function Yordam() {
 
             <div className="form-group">
               <label>Xabaringiz</label>
-              <textarea 
-                rows="5" 
-                placeholder="Xabar matni..." 
+              <textarea
+                rows="5"
+                placeholder=" "
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
                 required
@@ -130,7 +149,8 @@ function Yordam() {
 
           {submitted && (
             <div className="form-success-toast">
-              🎉 Xabaringiz muvaffaqiyatli yuborildi! Tez orada mutaxassislarimiz aloqaga chiqishadi.
+              🎉 Xabaringiz muvaffaqiyatli yuborildi! Tez orada
+              mutaxassislarimiz aloqaga chiqishadi.
             </div>
           )}
         </section>
