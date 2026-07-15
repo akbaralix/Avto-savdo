@@ -236,7 +236,42 @@
   color: #0f172a;
   font-weight: 700;
 }
+.profil-navigation {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-bottom: 15px;
+}
+.profil-navigation-item {
+  background-color: #5625b7f8;
+  padding: 10px;
+  border-radius: 8px;
+  justify-content: start;
+}
+.profil-navigation-item a {
+  display: flex;
+  color: white;
+  align-items: center;
+  gap: 20px;
+}
+.profil-navigation-item-icon {
+  display: flex;
+  align-items: center;
+  color: white;
+  background-color: #5220d9;
+  padding: 10px;
+  border-radius: 12px;
+}
 
+.icon-xizmatlar {
+  background: #eef7ff;
+  color: #2563eb;
+}
+
+.icon-yordam {
+  background: #ecfdf5;
+  color: #059669;
+}
 .logout-btn {
   width: 100%;
   background-color: #fef2f2;

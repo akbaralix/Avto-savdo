@@ -12,7 +12,9 @@ import {
   FaCalendarAlt,
   FaExternalLinkAlt,
   FaHourglassHalf,
+  FaTools,
 } from "react-icons/fa";
+import { BiSupport } from "react-icons/bi";
 import { toast } from "react-hot-toast";
 import "./profile.css";
 
@@ -141,18 +143,32 @@ function Profile() {
                 </div>
               )}
             </div>
-
             <h2 className="user-fullname">
               {user.first_name} {user.last_name}
             </h2>
-
             {user.username && <p className="user-username">@{user.username}</p>}
-
             <div className="user-meta">
               <span className="meta-label">Telegram ID:</span>
               <span className="meta-value">{user.telegramId}</span>
             </div>
-
+            <div className="profil-navigation">
+              <div className="profil-navigation-item ">
+                <Link to={"/xizmatlar"}>
+                  <div className="profil-navigation-item-icon icon-xizmatlar">
+                    <FaTools />
+                  </div>
+                  <span>Xizmatlar</span>
+                </Link>
+              </div>{" "}
+              <div className="profil-navigation-item">
+                <Link to={"/yordam"}>
+                  <div className="profil-navigation-item-icon icon-yordam">
+                    <BiSupport />
+                  </div>
+                  <span>Yordam</span>
+                </Link>
+              </div>
+            </div>
             <button className="logout-btn" onClick={logout}>
               <FaSignOutAlt /> Chiqish
             </button>

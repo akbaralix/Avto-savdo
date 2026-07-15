@@ -1,7 +1,7 @@
 .promo-banner {
   display: flex;
   height: 350px;
-  background-color: rgb(133, 133, 241);
+  background-color: #8586f5;
   border-radius: 20px;
   margin-top: 20px;
 }
@@ -344,17 +344,12 @@
 .car-card {
   background: #ffffff;
   border: 1px solid #e2e8f0;
-  border-radius: 20px;
+  border-radius: 14px;
   overflow: hidden;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
   transition: all 0.3s ease;
   display: flex;
   flex-direction: column;
-}
-
-.car-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
 }
 
 .car-card-image {
@@ -370,10 +365,6 @@
   height: 100%;
   object-fit: cover;
   transition: transform 0.5s ease;
-}
-
-.car-card:hover .car-card-image img {
-  transform: scale(1.08);
 }
 
 .favorite-btn {

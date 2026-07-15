@@ -92,6 +92,12 @@ const BRANDS_AND_MODELS = {
 
 const UZS_TO_USD_RATE = 12800;
 
+const formatNumberWithSpaces = (value) => {
+  if (!value && value !== 0) return "";
+  const clean = value.toString().replace(/\D/g, "");
+  return clean.replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+};
+
 function ElonBerish() {
   const { addCar, user, login } = useContext(AppContext);
   const navigate = useNavigate();
@@ -202,6 +208,14 @@ function ElonBerish() {
     setOwnerPhone(formatted);
   };
 
+  const handlePriceChange = (e) => {
+    setPrice(formatNumberWithSpaces(e.target.value));
+  };
+
+  const handleMileageChange = (e) => {
+    setMileage(formatNumberWithSpaces(e.target.value));
+  };
+
   const handleFiles = async (files) => {
     const fileList = Array.from(files);
 
@@ -248,10 +262,11 @@ function ElonBerish() {
     const defaultImage =
       "https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=600&q=80";
 
+    const cleanPrice = parseFloat(price.toString().replace(/\s+/g, "")) || 0;
     const finalPrice =
       priceCurrency === "UZS"
-        ? Math.round(parseFloat(price) / UZS_TO_USD_RATE)
-        : parseFloat(price);
+        ? Math.round(cleanPrice / UZS_TO_USD_RATE)
+        : cleanPrice;
 
     const finalPhone = "+998" + ownerPhone.substring(4).replace(/\D/g, "");
     const finalBrand = brand === "Boshqa" ? customBrand : brand;
@@ -263,7 +278,7 @@ function ElonBerish() {
       model: finalModel,
       year: parseInt(year),
       price: finalPrice,
-      mileage: parseFloat(mileage),
+      mileage: parseFloat(mileage.toString().replace(/\s+/g, "")) || 0,
       transmission,
       fuel,
       category,
@@ -314,7 +329,7 @@ function ElonBerish() {
       return;
     }
 
-    const priceNum = parseFloat(price);
+    const priceNum = parseFloat(price.toString().replace(/\s+/g, "")) || 0;
     if (priceCurrency === "USD" && priceNum < 100) {
       toast.error("Minimal narx 100$ bo'lishi kerak.");
       return;
@@ -461,14 +476,14 @@ function ElonBerish() {
                 style={{ display: "flex", gap: "8px" }}
               >
                 <input
-                  type="number"
+                  type="text"
                   placeholder={
                     priceCurrency === "USD"
-                      ? "Masalan: 12 500 $ (min 100$)"
-                      : "Masalan: 1 300 0000 (min 1 mln)"
+                      ? "Masalan: 12 500 (min 100$)"
+                      : "Masalan: 13 000 000 (min 1 mln)"
                   }
                   value={price}
-                  onChange={(e) => setPrice(e.target.value)}
+                  onChange={handlePriceChange}
                   style={{ flex: 1 }}
                   required
                 />
@@ -499,10 +514,10 @@ function ElonBerish() {
               <FaRoad /> Yurgan masofasi (km) *
             </label>
             <input
-              type="number"
-              placeholder="Masalan: 45000"
+              type="text"
+              placeholder="Masalan: 45 000"
               value={mileage}
-              onChange={(e) => setMileage(e.target.value)}
+              onChange={handleMileageChange}
               required
             />
           </div>
