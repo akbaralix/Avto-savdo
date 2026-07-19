@@ -327,13 +327,13 @@ function Home() {
           </div>
           <div className="footer-social">
             <h4>Ijtimoiy tarmoqlarimiz</h4>
-            <Link to={"https://t.me/avtosavdo"}>
+            <Link to={"https://t.me/avtosavdotg"}>
               <p>Telegram</p>
               <span>
                 <FaTelegram />
               </span>
             </Link>
-            <Link to={"https://instagram.com/avtosavto"}>
+            <Link to={"https://instagram.com/avtosavtotg"}>
               <p>Instagram</p>
               <span>
                 <FaInstagram />
