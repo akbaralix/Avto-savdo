@@ -308,7 +308,7 @@
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.4);
   backdrop-filter: blur(8px);
-  z-index: 9999;
+  z-index: 9998;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -322,8 +322,9 @@
   width: 100%;
   max-width: 440px;
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-  animation: eb-modal-show 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: eb-modal-show 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   text-align: center;
+  z-index: 9999;
 }
 
 @keyframes eb-modal-show {
@@ -346,8 +347,7 @@
 
 .eb-modal-card p {
   font-size: 14px;
-  color: #718096;
-  line-height: 1.6;
+  line-height: 1.5;
   margin-bottom: 24px;
 }
 
@@ -416,23 +416,13 @@
 }
 
 .eb-btn-yes {
-  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  background: linear-gradient(135deg, #2d25d0 0%, #3926cc 100%);
   color: #ffffff;
   box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
 }
 
-.eb-btn-yes:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 6px 16px rgba(16, 185, 129, 0.25);
-}
-
 .eb-btn-no {
   background-color: #f7fafc;
-  border: 1px solid #edf2f7;
-  color: #718096;
-}
-
-.eb-btn-no:hover {
-  background-color: #edf2f7;
-  color: #1a202c;
+  border: 1px solid #979a9d;
+  color: #000000;
 }

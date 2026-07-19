@@ -96,8 +96,19 @@ function Elonlar() {
         <p>
           Jami topildi: <strong>{filteredCars.length} ta</strong> avtomobil
         </p>
+      </div>{" "}
+      <div className="filter-item">
+        <label>Qidiruv</label>
+        <div className="search-input-wrapper">
+          <input
+            type="text"
+            placeholder="Model yoki marka..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+          <FaSearch className="search-icon" />
+        </div>
       </div>
-
       <div className="elonlar-content">
         {/* Sidebar Filters */}
         <aside className="filters-sidebar">
@@ -123,23 +134,9 @@ function Elonlar() {
             </div>
           </div>
 
-          {/* Silliq ochilib-yopiladigan kontent qismi */}
           <div
             className={`filters-collapsible ${isFilterOpen ? "is-open" : ""}`}
           >
-            <div className="filter-item">
-              <label>Qidiruv</label>
-              <div className="search-input-wrapper">
-                <input
-                  type="text"
-                  placeholder="Model yoki marka..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                />
-                <FaSearch className="search-icon" />
-              </div>
-            </div>
-
             <div className="filter-item">
               <label>Marka</label>
               <select
@@ -300,7 +297,6 @@ function Elonlar() {
           )}
         </main>
       </div>
-
       {selectedCar && (
         <CarDetailModal
           car={selectedCar}

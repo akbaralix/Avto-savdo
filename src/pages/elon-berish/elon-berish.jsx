@@ -734,7 +734,10 @@ function ElonBerish() {
 
       {/* Confirmation Modal Overlay */}
       {showConfirmModal && (
-        <div className="eb-modal-overlay">
+        <div
+          className="eb-modal-overlay"
+          onClick={() => setShowConfirmModal(false)}
+        >
           <div className="eb-modal-card confirm-card">
             <h3>E'lonni tasdiqlash</h3>
             <p>

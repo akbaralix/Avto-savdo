@@ -120,6 +120,7 @@
 
 .filter-item label {
   font-size: 13px;
+  margin-top: 20px;
   font-weight: 700;
   color: #4a5568;
 }
@@ -147,6 +148,7 @@
   right: 12px;
   top: 50%;
   transform: translateY(-50%);
+  cursor: pointer;
   color: #a0aec0;
   font-size: 14px;
 }
@@ -234,6 +236,10 @@
 @media (max-width: 600px) {
   .elonlar-grid {
     grid-template-columns: 1fr;
+  }
+  .elonlar-header {
+    padding-bottom: 10px;
+    line-height: 25px;
   }
   .elonlar-header h1 {
     font-size: 1.4rem;

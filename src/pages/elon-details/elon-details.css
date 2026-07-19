@@ -195,7 +195,10 @@
   gap: 24px;
 }
 
-.info-header-card, .specs-card, .description-card, .contact-card {
+.info-header-card,
+.specs-card,
+.description-card,
+.contact-card {
   background-color: #ffffff;
   border-radius: 20px;
   padding: 24px;
@@ -279,7 +282,8 @@
 }
 
 /* Tech Specs Card */
-.specs-card h3, .description-card h3 {
+.specs-card h3,
+.description-card h3 {
   font-size: 18px;
   font-weight: 700;
   color: #1e293b;
@@ -482,7 +486,8 @@
   gap: 8px;
 }
 
-.lightbox-zoom-buttons button, .lightbox-close-btn {
+.lightbox-zoom-buttons button,
+.lightbox-close-btn {
   background: none;
   border: none;
   color: #ffffff;
@@ -497,7 +502,8 @@
   transition: background-color 0.2s ease;
 }
 
-.lightbox-zoom-buttons button:hover, .lightbox-close-btn:hover {
+.lightbox-zoom-buttons button:hover,
+.lightbox-close-btn:hover {
   background-color: rgba(255, 255, 255, 0.15);
 }
 
@@ -553,7 +559,8 @@
 }
 
 /* Loading & Error States */
-.details-loading-container, .details-error-container {
+.details-loading-container,
+.details-error-container {
   padding-top: 100px;
   min-height: calc(100vh - 100px);
   display: flex;
@@ -576,7 +583,9 @@
 }
 
 @keyframes details-spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .details-loading-container p {
@@ -626,7 +635,10 @@
     padding-top: 80px;
   }
   .details-container {
-    padding: 12px;
+    padding: 3px;
+  }
+  .description-text {
+    line-height: 1.4;
   }
   .details-breadcrumb {
     margin-bottom: 16px;

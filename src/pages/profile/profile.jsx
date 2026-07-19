@@ -152,6 +152,15 @@ function Profile() {
               <span className="meta-value">{user.telegramId}</span>
             </div>
             <div className="profil-navigation">
+              {" "}
+              <div className="profil-navigation-item ">
+                <Link to={"/elon-berish"}>
+                  <div className="profil-navigation-item-icon icon-elonberish">
+                    <FaPlus />
+                  </div>
+                  <span>E'lon berish</span>
+                </Link>
+              </div>
               <div className="profil-navigation-item ">
                 <Link to={"/xizmatlar"}>
                   <div className="profil-navigation-item-icon icon-xizmatlar">
@@ -177,16 +186,6 @@ function Profile() {
 
         {/* Profile Main Content */}
         <main className="profile-main">
-          <div className="section-header">
-            <div className="title-area">
-              <h2>Mening e'lonlarim</h2>
-              <span className="ads-count">{myCars.length} ta e'lon</span>
-            </div>
-            <Link to="/elon-berish" className="add-new-ad-btn">
-              <FaPlus /> Yangi e'lon
-            </Link>
-          </div>
-
           {loadingCars ? (
             <div className="profile-loading">
               <div className="spinner-icon spinning" />
