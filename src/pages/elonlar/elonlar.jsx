@@ -2,14 +2,9 @@ import React, { useContext, useState, useEffect } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { AppContext } from "../../context/AppContext";
 import CarDetailModal from "../../components/CarDetailModal/CarDetailModal";
+import CarCard from "../../components/CarCard/CarCard";
 import {
   FaSearch,
-  FaMapMarkerAlt,
-  FaRoad,
-  FaCogs,
-  FaGasPump,
-  FaHeart,
-  FaRegHeart,
   FaFilter,
   FaChevronDown,
   FaChevronUp,
@@ -223,65 +218,15 @@ function Elonlar() {
         <main className="listings-main">
           {filteredCars.length > 0 ? (
             <div className="elonlar-grid">
-              {filteredCars.map((car) => {
-                const isFav = favorites.includes(car.id);
-                return (
-                  <Link to={`/elon/${car._id}`}>
-                    <div key={car.id} className="car-card">
-                      <div className="car-card-image">
-                        <img
-                          src={car.image}
-                          alt={`${car.brand} ${car.model}`}
-                        />
-                        <button
-                          className={`favorite-btn ${isFav ? "active" : ""}`}
-                          onClick={() => toggleFavorite(car.id)}
-                        >
-                          {isFav ? <FaHeart /> : <FaRegHeart />}
-                        </button>
-                        <span className="car-category-tag">{car.category}</span>
-                      </div>
-
-                      <div className="car-card-body">
-                        <div className="car-title-row">
-                          <h3>
-                            {car.brand} {car.model}
-                          </h3>
-                          <span className="car-card-year">{car.year}-yil</span>
-                        </div>
-
-                        <div className="car-city">
-                          <FaMapMarkerAlt /> {car.city}
-                        </div>
-
-                        <div className="car-specs">
-                          <span title="Yurgani">
-                            <FaRoad /> {car.mileage.toLocaleString()} km
-                          </span>
-                          <span title="KPP">
-                            <FaCogs /> {car.transmission}
-                          </span>
-                          <span title="Yoqilg'i">
-                            <FaGasPump /> {car.fuel}
-                          </span>
-                        </div>
-
-                        <div className="car-card-footer">
-                          <div className="car-price">
-                            ${car.price.toLocaleString()}
-                          </div>
-                          <button
-                            className="view-details-btn"
-                            onClick={() => setSelectedCar(car)}
-                          >
-                            Batafsil
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </Link>
-                );
-              })}
+              {filteredCars.map((car) => (
+                <CarCard
+                  key={car.id}
+                  car={car}
+                  isFavorite={favorites.includes(car.id)}
+                  onToggleFavorite={toggleFavorite}
+                  onViewDetails={setSelectedCar}
+                />
+              ))}
             </div>
           ) : (
             <div className="no-cars-found">

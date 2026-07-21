@@ -2,16 +2,12 @@ import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AppContext } from "../../context/AppContext";
 import CarDetailModal from "../../components/CarDetailModal/CarDetailModal";
+import CarCard from "../../components/CarCard/CarCard";
 import {
   FaPlus,
   FaSearch,
   FaCar,
   FaMapMarkerAlt,
-  FaRoad,
-  FaCogs,
-  FaGasPump,
-  FaHeart,
-  FaRegHeart,
   FaShieldAlt,
   FaThumbsUp,
   FaCheckCircle,
@@ -65,8 +61,8 @@ function Home() {
           <div className="hero__promo-content">
             <h2>
               Avtomobilingizni oson{" "}
-              <span style={{ color: "rgb(46, 49, 211)" }}>soting</span> yoki
-              sotib <span style={{ color: "rgb(46, 49, 211)" }}>oling</span>
+              <span className="accent-soting">soting</span> yoki
+              sotib <span className="accent-oling">oling</span>
             </h2>
             <p>
               AvtoSavdo - Ishonchli va qulay avtomobil e'lonlari platformasi.
@@ -86,8 +82,8 @@ function Home() {
 
         <div className="promo-banner-img">
           <img
-            src="https://parkers-images.bauersecure.com/wp-images/287037/cut-out/1200x800/040-bmw-m5-review.jpg?mode=max&quality=90&scale=down"
-            alt="BMW M5"
+            src="https://pngimg.com/uploads/porsche/porsche_PNG102850.png"
+            alt="Porsche"
           />
         </div>
       </div>
@@ -183,62 +179,15 @@ function Home() {
         </div>
 
         <div className="cars-grid">
-          {featuredCars.map((car) => {
-            const isFav = favorites.includes(car.id);
-            return (
-              <Link to={`/elon/${car._id}`}>
-                <div key={car.id} className="car-card">
-                  <div className="car-card-image">
-                    <img src={car.image} alt={`${car.brand} ${car.model}`} />
-                    <button
-                      className={`favorite-btn ${isFav ? "active" : ""}`}
-                      onClick={() => toggleFavorite(car.id)}
-                    >
-                      {isFav ? <FaHeart /> : <FaRegHeart />}
-                    </button>
-                    <span className="car-category-tag">{car.category}</span>
-                  </div>
-
-                  <div className="car-card-body">
-                    <div className="car-title-row">
-                      <h3>
-                        {car.brand} {car.model}
-                      </h3>
-                      <span className="car-card-year">{car.year}-yil</span>
-                    </div>
-
-                    <div className="car-city">
-                      <FaMapMarkerAlt /> {car.city}
-                    </div>
-
-                    <div className="car-specs">
-                      <span title="Yurgani">
-                        <FaRoad /> {car.mileage.toLocaleString()} km
-                      </span>
-                      <span title="KPP">
-                        <FaCogs /> {car.transmission}
-                      </span>
-                      <span title="Yoqilg'i">
-                        <FaGasPump /> {car.fuel}
-                      </span>
-                    </div>
-
-                    <div className="car-card-footer">
-                      <div className="car-price">
-                        ${car.price.toLocaleString()}
-                      </div>
-                      <button
-                        className="view-details-btn"
-                        onClick={() => setSelectedCar(car)}
-                      >
-                        Batafsil
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </Link>
-            );
-          })}
+          {featuredCars.map((car) => (
+            <CarCard
+              key={car.id}
+              car={car}
+              isFavorite={favorites.includes(car.id)}
+              onToggleFavorite={toggleFavorite}
+              onViewDetails={setSelectedCar}
+            />
+          ))}
         </div>
 
         <div className="view-all-wrapper">

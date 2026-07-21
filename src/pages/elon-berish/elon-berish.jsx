@@ -122,7 +122,7 @@ function ElonBerish() {
   const [ownerPhone, setOwnerPhone] = useState("+998");
 
   // Image Upload states
-  const [uploadedImages, setUploadedImages] = useState([]);
+  const [selectedFiles, setSelectedFiles] = useState([]);
   const [uploading, setUploading] = useState(false);
   const [dragActive, setDragActive] = useState(false);
 
@@ -216,41 +216,38 @@ function ElonBerish() {
     setMileage(formatNumberWithSpaces(e.target.value));
   };
 
-  const handleFiles = async (files) => {
+  const handleFiles = (files) => {
     const fileList = Array.from(files);
 
     // Check if adding files exceeds the limit
-    if (uploadedImages.length + fileList.length > 10) {
+    if (selectedFiles.length + fileList.length > 10) {
       toast.error("Ko'pi bilan 10 ta rasm yuklash mumkin.");
       return;
     }
 
-    setUploading(true);
-    const uploadPromises = fileList.map(async (file) => {
+    const newFiles = [];
+    for (const file of fileList) {
       if (!file.type.startsWith("image/")) {
         toast.error(`${file.name} - rasm fayli emas!`);
-        return null;
+        continue;
       }
-      try {
-        const url = await uploadImageToSupabase(file);
-        return url;
-      } catch (err) {
-        console.error("Fayl yuklashda xatolik:", err);
-        toast.error(`${file.name} rasmini yuklashda xatolik yuz berdi.`);
-        return null;
-      }
-    });
+      newFiles.push({
+        file,
+        previewUrl: URL.createObjectURL(file),
+      });
+    }
 
-    const urls = await Promise.all(uploadPromises);
-    const validUrls = urls.filter((url) => url !== null);
-    setUploadedImages((prev) => [...prev, ...validUrls]);
-    setUploading(false);
+    setSelectedFiles((prev) => [...prev, ...newFiles]);
   };
 
   const removeImage = (indexToRemove) => {
-    setUploadedImages((prev) =>
-      prev.filter((_, index) => index !== indexToRemove),
-    );
+    setSelectedFiles((prev) => {
+      const fileToRemove = prev[indexToRemove];
+      if (fileToRemove && fileToRemove.previewUrl) {
+        URL.revokeObjectURL(fileToRemove.previewUrl);
+      }
+      return prev.filter((_, index) => index !== indexToRemove);
+    });
   };
 
   const handleTelegramAuth = () => {
@@ -259,6 +256,25 @@ function ElonBerish() {
   };
 
   const submitAdData = async () => {
+    setUploading(true);
+    let urls = [];
+    try {
+      const uploadPromises = selectedFiles.map(async (item) => {
+        try {
+          const url = await uploadImageToSupabase(item.file);
+          return url;
+        } catch (err) {
+          console.error("Fayl yuklashda xatolik:", err);
+          throw new Error(`${item.file.name} rasmini yuklashda xatolik yuz berdi.`);
+        }
+      });
+      urls = await Promise.all(uploadPromises);
+    } catch (err) {
+      setUploading(false);
+      toast.error(err.message);
+      return;
+    }
+
     const defaultImage =
       "https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=600&q=80";
 
@@ -285,8 +301,8 @@ function ElonBerish() {
       engineVolume: engineVolume || "0",
       color: color || "Belgilanmagan",
       city,
-      image: uploadedImages[0] || defaultImage,
-      images: uploadedImages,
+      image: urls[0] || defaultImage,
+      images: urls,
       description:
         description ||
         "Avtomobil yaxshi holatda, barcha texnik ko'riklardan o'tgan.",
@@ -300,6 +316,8 @@ function ElonBerish() {
       navigate("/elonlar");
     } catch (error) {
       toast.error("E'lonni saqlashda xatolik yuz berdi: " + error.message);
+    } finally {
+      setUploading(false);
     }
   };
 
@@ -340,7 +358,7 @@ function ElonBerish() {
     }
 
     // Min 1 image validation
-    if (uploadedImages.length < 1) {
+    if (selectedFiles.length < 1) {
       toast.error("Iltimos, kamida 1 ta avtomobil rasmini yuklang.");
       return;
     }
@@ -642,13 +660,13 @@ function ElonBerish() {
             </div>
           )}
 
-          {uploadedImages.length > 0 && (
+          {selectedFiles.length > 0 && (
             <div className="uploaded-previews-container">
-              <h4>Yuklangan rasmlar ({uploadedImages.length}/10):</h4>
+              <h4>Yuklangan rasmlar ({selectedFiles.length}/10):</h4>
               <div className="previews-grid">
-                {uploadedImages.map((url, index) => (
+                {selectedFiles.map((item, index) => (
                   <div key={index} className="preview-card">
-                    <img src={url} alt={`Preview ${index + 1}`} />
+                    <img src={item.previewUrl} alt={`Preview ${index + 1}`} />
                     {index === 0 && (
                       <span className="main-tag">Asosiy rasm</span>
                     )}
@@ -736,30 +754,41 @@ function ElonBerish() {
       {showConfirmModal && (
         <div
           className="eb-modal-overlay"
-          onClick={() => setShowConfirmModal(false)}
+          onClick={() => !uploading && setShowConfirmModal(false)}
         >
-          <div className="eb-modal-card confirm-card">
+          <div className="eb-modal-card confirm-card" onClick={(e) => e.stopPropagation()}>
             <h3>E'lonni tasdiqlash</h3>
-            <p>
-              Kiritilgan ma'lumotlar bilan yangi avtomobil e'loni yaratilsinmi?
-            </p>
+            {uploading ? (
+              <div className="eb-upload-progress" style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "20px 0" }}>
+                <FaSpinner className="spinner-icon spinning" style={{ fontSize: "2.5rem", color: "#3b82f6" }} />
+                <p style={{ marginTop: "15px", color: "#4b5563", fontSize: "1rem", textAlign: "center" }}>
+                  Rasmlar Supabase-ga yuklanmoqda va e'lon saqlanmoqda...
+                </p>
+              </div>
+            ) : (
+              <>
+                <p>
+                  Kiritilgan ma'lumotlar bilan yangi avtomobil e'loni yaratilsinmi?
+                </p>
 
-            <div className="eb-confirm-buttons">
-              <button
-                type="button"
-                className="eb-btn-yes"
-                onClick={submitAdData}
-              >
-                Ha
-              </button>
-              <button
-                type="button"
-                className="eb-btn-no"
-                onClick={() => setShowConfirmModal(false)}
-              >
-                Yo'q
-              </button>
-            </div>
+                <div className="eb-confirm-buttons">
+                  <button
+                    type="button"
+                    className="eb-btn-yes"
+                    onClick={submitAdData}
+                  >
+                    Ha
+                  </button>
+                  <button
+                    type="button"
+                    className="eb-btn-no"
+                    onClick={() => setShowConfirmModal(false)}
+                  >
+                    Yo'q
+                  </button>
+                </div>
+              </>
+            )}
           </div>
         </div>
       )}
