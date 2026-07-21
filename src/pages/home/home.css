@@ -149,7 +149,7 @@
   .promo-banner {
     flex-direction: column;
     height: auto;
-    padding: 40px 20px;
+    padding: 20px;
   }
   .promo-banner::before {
     top: 75%;
@@ -164,9 +164,15 @@
   }
   .hero__promo-content h2 {
     font-size: 2rem;
+    line-height: 1.2;
+  }
+  .hero__promo-badge {
+    line-height: 1.2;
+    font-size: px;
   }
   .hero__promo-content p {
     font-size: 0.95rem;
+    line-height: 1.3;
   }
   .promo-banner-img {
     width: 100%;
@@ -198,6 +204,7 @@
   }
   .promo-banner-button {
     flex-direction: column;
+    gap: 10px;
     width: 100%;
   }
   .promo-banner-button a {
@@ -205,10 +212,6 @@
     justify-content: center;
   }
 }
-
-/* ==========================================================================
-   NEW STYLES FOR THE HOME PAGE SECTIONS
-   ========================================================================== */
 
 .home-container {
   display: flex;
